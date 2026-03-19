@@ -3,482 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Premium Dashboard - Full Features</title>
+    <title>Smart Business Manager</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
-        :root {
-            --bg: #F5F7F9;
-            --surface: #FFFFFF;
-            --text-main: #0F172A;
-            --text-muted: #64748B;
-            --primary: #000000;
-            --primary-light: #334155;
-            --border: #E2E8F0;
-            --success-bg: #DCFCE7;
-            --success-text: #16A34A;
-            --chart-bar-1: #0F172A; /* Black/Dark Blue for Sales */
-            --chart-bar-2: #34D399; /* Green for Profit */
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .app-container {
-            max-width: 480px;
-            margin: 0 auto;
-            background: var(--bg);
-            min-height: 100vh;
-            position: relative;
-            padding-bottom: 90px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.05);
-        }
-
-        /* Top Bar */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px 24px 16px;
-        }
-
-        .user-greet p {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin: 0 0 4px 0;
-            font-weight: 500;
-        }
-
-        .user-greet h1 {
-            font-size: 20px;
-            margin: 0;
-            font-weight: 700;
-        }
-
-        .profile-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-main);
-        }
-
-        /* Premium Black Revenue Card */
-        .premium-card {
-            background: linear-gradient(100deg, #111827 0%, #000000 100%);
-            border-radius: 24px;
-            margin: 0 24px 20px;
-            padding: 24px;
-            color: white;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card-label {
-            font-size: 13px;
-            color: #94A3B8;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .card-amount {
-            font-size: 32px;
-            font-weight: 800;
-            margin: 0 0 15px;
-        }
-
-        /* Beautiful Sales & Profit Chart Section */
-        .chart-section {
-            background: var(--surface);
-            margin: 0 24px 20px;
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-        }
-
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .chart-header h3 {
-            margin: 0;
-            font-size: 15px;
-            font-weight: 700;
-        }
-
-        .chart-legend {
-            display: flex;
-            gap: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        .legend-dot {
-            display: inline-block;
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            margin-right: 4px;
-        }
-
-        .chart-bars-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            height: 100px;
-            padding-top: 10px;
-        }
-
-        .bar-group {
-            display: flex;
-            gap: 4px;
-            align-items: flex-end;
-            height: 100%;
-        }
-
-        .bar {
-            width: 12px;
-            border-radius: 4px 4px 0 0;
-        }
-
+        :root { --bg: #F5F7F9; --surface: #FFFFFF; --text-main: #0F172A; --text-muted: #64748B; --primary: #000000; --border: #E2E8F0; --success-text: #16A34A; --chart-bar-1: #0F172A; --chart-bar-2: #34D399; --danger: #EF4444; --danger-bg: #FEE2E2; }
+        body.dark-theme { --bg: #0F172A; --surface: #1E293B; --text-main: #F8FAFC; --text-muted: #94A3B8; --primary: #3B82F6; --border: #334155; --chart-bar-1: #3B82F6; --danger-bg: #450a0a; }
+        body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: var(--text-main); -webkit-font-smoothing: antialiased; transition: background-color 0.3s; }
+        .app-container { max-width: 480px; margin: 0 auto; background: var(--bg); min-height: 100vh; position: relative; padding-bottom: 90px; transition: 0.3s; }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 24px 24px 16px; }
+        .user-greet p { font-size: 13px; color: var(--text-muted); margin: 0 0 4px 0; font-weight: 500; }
+        .user-greet h1 { font-size: 20px; margin: 0; font-weight: 700; }
+        .profile-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+        .premium-card { background: linear-gradient(100deg, #111827 0%, #000000 100%); border-radius: 24px; margin: 0 24px 20px; padding: 24px; color: white; box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+        .card-label { font-size: 13px; color: #94A3B8; font-weight: 500; margin-bottom: 8px; }
+        .card-amount { font-size: 32px; font-weight: 800; margin: 0 0 15px; }
+        .chart-section { background: var(--surface); margin: 0 24px 20px; border-radius: 20px; padding: 20px; border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .chart-header h3 { margin: 0; font-size: 15px; font-weight: 700; }
+        .chart-legend { display: flex; gap: 12px; font-size: 11px; font-weight: 600; color: var(--text-muted); }
+        .legend-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+        .chart-bars-container { display: flex; justify-content: space-between; align-items: flex-end; height: 100px; padding-top: 10px; }
+        .bar-group { display: flex; gap: 4px; align-items: flex-end; height: 100%; }
+        .bar { width: 12px; border-radius: 4px 4px 0 0; }
         .bar.sales { background: var(--chart-bar-1); }
         .bar.profit { background: var(--chart-bar-2); }
-
-        .chart-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        /* Expanded Action Grid (8 Features) */
-        .action-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 16px 12px;
-            padding: 0 24px 24px;
-        }
-
-        .action-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            text-align: center;
-        }
-
-        .action-icon-wrapper {
-            width: 52px;
-            height: 52px;
-            background: var(--surface);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid var(--border);
-            color: var(--primary);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-        }
-
-        .action-item span {
-            font-size: 10.5px;
-            font-weight: 600;
-            color: var(--text-main);
-            line-height: 1.2;
-        }
-
-        .action-item:active .action-icon-wrapper {
-            transform: scale(0.95);
-            background: #F1F5F9;
-        }
-
-        /* Bottom Nav */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 480px;
-            background: var(--surface);
-            display: flex;
-            justify-content: space-around;
-            padding: 16px 8px 24px;
-            border-top: 1px solid var(--border);
-            z-index: 100;
-        }
-
-        .nav-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-muted);
-            text-decoration: none;
-        }
-
-        .nav-btn.active { color: var(--primary); }
+        .chart-labels { display: flex; justify-content: space-between; margin-top: 10px; font-size: 11px; color: var(--text-muted); font-weight: 600; }
+        .action-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 12px; padding: 0 24px 24px; }
+        .action-item { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; cursor: pointer; }
+        .action-icon-wrapper { width: 52px; height: 52px; background: var(--surface); border-radius: 18px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); color: var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: all 0.2s; }
+        .action-item span { font-size: 10.5px; font-weight: 600; color: var(--text-main); line-height: 1.2; }
+        .action-item:active .action-icon-wrapper { transform: scale(0.9); background: var(--border); }
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--surface); display: flex; justify-content: space-around; padding: 16px 8px 24px; border-top: 1px solid var(--border); z-index: 10; }
+        .nav-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); cursor: pointer; transition: 0.3s; }
+        .nav-btn.active { color: var(--primary); transform: translateY(-2px); }
         .nav-btn span.material-symbols-rounded { font-size: 26px; }
-        .nav-btn.active span.material-symbols-rounded { font-variation-settings: 'FILL' 1; }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); display: none; align-items: flex-end; justify-content: center; z-index: 9999; }
+        .modal-content { background: var(--surface); width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 24px; animation: slideUp 0.3s ease; max-height: 85vh; overflow-y: auto; color: var(--text-main); }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .modal-header h3 { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 18px; }
+        .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-muted); }
+        textarea { width: 100%; padding: 12px; border: 2px dashed var(--border); border-radius: 12px; margin-bottom: 16px; font-family: inherit; font-size: 13px; outline: none; resize: none; box-sizing: border-box; background: transparent; color: var(--text-main); }
+        .form-grid { display: grid; gap: 12px; margin-bottom: 20px; }
+        input { width: 100%; padding: 14px; border: 1px solid var(--border); border-radius: 12px; font-size: 14px; outline: none; background: var(--bg); color: var(--text-main); box-sizing: border-box; }
+        .save-btn { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; margin-bottom: 10px;}
+        .save-btn:active { transform: scale(0.98); }
+        .danger-btn { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+        .customer-item { padding: 12px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .cust-name { font-weight: 700; font-size: 14px; }
+        .cust-details { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+        .print-icon { background: var(--border); padding: 6px; border-radius: 8px; cursor: pointer; color: var(--primary); display: flex; align-items: center; }
+        .hisab-box { background: var(--bg); border: 1px solid var(--border); padding: 16px; border-radius: 16px; margin-bottom: 10px; display: flex; justify-content: space-between; font-weight: 600;}
+        .setting-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+        .toggle-switch { width: 50px; height: 26px; background: var(--border); border-radius: 20px; position: relative; cursor: pointer; transition: 0.3s; }
+        .toggle-switch::after { content: ''; position: absolute; width: 22px; height: 22px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .toggle-switch.active { background: var(--success-text); }
+        .toggle-switch.active::after { left: 26px; }
     </style>
 </head>
-<div id="orderModal" class="modal-overlay" style="display: none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3><span class="material-symbols-rounded">content_paste</span> Auto Fill Order</h3>
-            <button onclick="closeModal()" class="close-btn"><span class="material-symbols-rounded">close</span></button>
-        </div>
-        
-        <div class="modal-body">
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">Paste customer message below:</p>
-            <textarea id="pasteArea" rows="4" placeholder="Name: Jawad Ahmad&#10;Phone: 0300-1234567&#10;Address: Mansehra, KPK&#10;Item: AI Course" oninput="autoExtractData()"></textarea>
-            
-            <div class="form-grid">
-                <input type="text" id="custName" placeholder="Customer Name">
-                <input type="text" id="custPhone" placeholder="Phone Number">
-                <input type="text" id="custAddress" placeholder="Full Address">
-                <input type="text" id="productName" placeholder="Product / Item">
-                <input type="number" id="productPrice" placeholder="Price (Rs)">
+<body>
+
+    <div id="orderModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header"><h3><span class="material-symbols-rounded">content_paste</span> New Order</h3><button onclick="closeModal('orderModal')" class="close-btn"><span class="material-symbols-rounded">close</span></button></div>
+            <div class="modal-body">
+                <textarea id="pasteArea" rows="4" placeholder="Paste WhatsApp message here..." oninput="autoExtractData()"></textarea>
+                <div class="form-grid"><input type="text" id="custName" placeholder="Customer Name"><input type="text" id="custPhone" placeholder="Phone Number"><input type="text" id="custAddress" placeholder="Full Address"><input type="text" id="productName" placeholder="Product / Item"><input type="number" id="productPrice" placeholder="Price (Rs)"></div>
+                <button onclick="saveOrderToFirebase()" class="save-btn" id="saveBtnText">Save Order</button>
             </div>
-            
-            <button onclick="saveOrderToFirebase()" class="save-btn">Save Order</button>
         </div>
     </div>
-</div>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <div id="listModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header"><h3><span class="material-symbols-rounded">local_shipping</span> Orders & Print</h3><button onclick="closeModal('listModal')" class="close-btn"><span class="material-symbols-rounded">close</span></button></div>
+            <div class="modal-body" id="customerListContainer"><p style="text-align:center; color: var(--text-muted); font-size: 13px;">Fetching data...</p></div>
+        </div>
+    </div>
 
-<style>
-    /* Modal CSS */
-    .modal-overlay {
-        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
-        display: flex; align-items: flex-end; justify-content: center; z-index: 1000;
-    }
-    .modal-content {
-        background: var(--surface); width: 100%; max-width: 480px;
-        border-radius: 24px 24px 0 0; padding: 24px; animation: slideUp 0.3s ease;
-    }
-    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .modal-header h3 { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 18px; }
-    .close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-muted); }
-    #pasteArea {
-        width: 100%; padding: 12px; border: 2px dashed var(--border); border-radius: 12px;
-        margin-bottom: 16px; font-family: inherit; font-size: 13px; outline: none; resize: none;
-    }
-    #pasteArea:focus { border-color: var(--primary); }
-    .form-grid { display: grid; gap: 12px; margin-bottom: 20px; }
-    .form-grid input {
-        width: 100%; padding: 14px; border: 1px solid var(--border);
-        border-radius: 12px; font-size: 14px; outline: none; background: #F8FAFC; box-sizing: border-box;
-    }
-    .save-btn {
-        width: 100%; padding: 16px; background: var(--primary); color: white;
-        border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer;
-    }
-</style>
+    <div id="stockModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header"><h3><span class="material-symbols-rounded">inventory_2</span> Stock Record</h3><button onclick="closeModal('stockModal')" class="close-btn"><span class="material-symbols-rounded">close</span></button></div>
+            <div class="modal-body">
+                <div class="form-grid" style="grid-template-columns: 2fr 1fr;"><input type="text" id="stockName" placeholder="Item Name (e.g. Shoes)"><input type="number" id="stockQty" placeholder="Qty"></div>
+                <button onclick="saveStock()" class="save-btn" style="margin-bottom: 20px;">Add to Stock</button>
+                <h4 style="margin: 0 0 10px 0; font-size: 14px;">Current Inventory:</h4>
+                <div id="stockListContainer" style="border: 1px solid var(--border); border-radius: 12px; padding: 10px;"></div>
+            </div>
+        </div>
+    </div>
 
-<script>
-    // 1. Firebase Configuration (Apni details yahan dalein)
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT.firebaseapp.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT.appspot.com",
-        messagingSenderId: "YOUR_ID",
-        appId: "YOUR_APP_ID"
-    };
+    <div id="hisabModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header"><h3><span class="material-symbols-rounded">pie_chart</span> Monthly Hisab</h3><button onclick="closeModal('hisabModal')" class="close-btn"><span class="material-symbols-rounded">close</span></button></div>
+            <div class="modal-body">
+                <div class="hisab-box"><span>Total Sales</span> <span id="hisabSales" style="color:var(--success-text)">Rs 0</span></div>
+                <div class="hisab-box"><span>Expenses (Delivery)</span> <span style="color:var(--danger)" id="hisabExpense">- Rs 0</span></div>
+                <div class="hisab-box" style="background: var(--chart-bar-1); color: white; border:none;"><span>Net Profit</span> <span id="hisabProfit">Rs 0</span></div>
+                <p style="font-size: 11px; text-align: center; color: var(--text-muted); margin-top: 15px;">Calculated automatically.</p>
+            </div>
+        </div>
+    </div>
 
-    // Initialize Firebase
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
-    const db = firebase.firestore();
+    <div id="settingsModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header"><h3><span class="material-symbols-rounded">admin_panel_settings</span> App Settings</h3><button onclick="closeModal('settingsModal')" class="close-btn"><span class="material-symbols-rounded">close</span></button></div>
+            <div class="modal-body">
+                <div class="setting-row">
+                    <div><b style="font-size: 14px;">Dark Mode</b><p style="margin:0; font-size: 11px; color: var(--text-muted);">Switch app to dark theme</p></div>
+                    <div class="toggle-switch" id="themeToggle" onclick="toggleDarkMode()"></div>
+                </div>
+                <h4 style="margin: 20px 0 10px; font-size: 13px; color: var(--text-muted);">BUSINESS PROFILE</h4>
+                <div class="form-grid"><input type="text" id="setShopName" placeholder="Shop Name (e.g. Jawad Pro)"><input type="number" id="setDeliveryFee" placeholder="Default Delivery Fee (e.g. 200)"></div>
+                <button onclick="saveSettings()" class="save-btn" style="padding: 12px; font-size: 14px;">Save Profile</button>
+                <h4 style="margin: 30px 0 10px; font-size: 13px; color: var(--danger);">DANGER ZONE</h4>
+                <button onclick="clearKhata()" class="save-btn danger-btn flex items-center justify-center gap-2"><span class="material-symbols-rounded">delete_forever</span> Clear All Records</button>
+            </div>
+        </div>
+    </div>
 
-    // 2. Modal Open/Close Logic
-    function openModal() { document.getElementById('orderModal').style.display = 'flex'; }
-    function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
-
-    // "Auto Fill Order" button par click event lagana
-    document.querySelectorAll('.action-item')[0].addEventListener('click', openModal);
-
-    // 3. AUTO EXTRACT LOGIC (Jadoo yahan hota hai)
-    function autoExtractData() {
-        const text = document.getElementById('pasteArea').value;
-        
-        // Simple Regex rules to find data
-        const nameMatch = text.match(/Name:\s*(.+)/i);
-        const phoneMatch = text.match(/Phone:\s*(.+)/i);
-        const addressMatch = text.match(/Address:\s*(.+)/i);
-        const itemMatch = text.match(/Item:\s*(.+)/i);
-        const priceMatch = text.match(/Price:\s*(\d+)/i);
-
-        // Fill inputs if data is found
-        if(nameMatch) document.getElementById('custName').value = nameMatch[1].trim();
-        if(phoneMatch) document.getElementById('custPhone').value = phoneMatch[1].trim();
-        if(addressMatch) document.getElementById('custAddress').value = addressMatch[1].trim();
-        if(itemMatch) document.getElementById('productName').value = itemMatch[1].trim();
-        if(priceMatch) document.getElementById('productPrice').value = priceMatch[1].trim();
-    }
-
-    // 4. Save to Firebase
-    function saveOrderToFirebase() {
-        const name = document.getElementById('custName').value;
-        const phone = document.getElementById('custPhone').value;
-        const address = document.getElementById('custAddress').value;
-        const product = document.getElementById('productName').value;
-        const price = document.getElementById('productPrice').value;
-
-        if(!name || !product) {
-            alert("Please fill at least Name and Product!");
-            return;
-        }
-
-        document.querySelector('.save-btn').innerText = "Saving...";
-
-        db.collection("Orders").add({
-            customerName: name,
-            phone: phone,
-            address: address,
-            product: product,
-            price: Number(price),
-            date: firebase.firestore.FieldValue.serverTimestamp(),
-            status: "Pending"
-        })
-        .then(() => {
-            alert("Order Saved Successfully! 🎉");
-            closeModal();
-            document.querySelector('.save-btn').innerText = "Save Order";
-            document.getElementById('pasteArea').value = ""; // Clear form
-        })
-        .catch((error) => {
-            console.error("Error adding document: ", error);
-            alert("Error saving order. Check console.");
-        });
-    }
-</script>
-
-<body>
     <div class="app-container">
-        <div class="top-bar">
-            <div class="user-greet">
-                <p>Business Dashboard</p>
-                <h1>Smart Manager</h1>
-            </div>
-            <div class="profile-btn">
-                <span class="material-symbols-rounded">storefront</span>
-            </div>
-        </div>
-
-        <div class="premium-card">
-            <div class="card-label">Total Balance (Current Month)</div>
-            <div class="card-amount">Rs 145,000</div>
-            <div style="font-size: 13px; color: #34D399; font-weight: 600; display: flex; align-items: center; gap: 5px;">
-                <span class="material-symbols-rounded" style="font-size: 18px;">arrow_upward</span>
-                Profit is up by 12%
-            </div>
-        </div>
-
-        <div class="chart-section">
-            <div class="chart-header">
-                <h3>Sales & Profit Chart</h3>
-                <div class="chart-legend">
-                    <div><span class="legend-dot" style="background: var(--chart-bar-1);"></span>Sales</div>
-                    <div><span class="legend-dot" style="background: var(--chart-bar-2);"></span>Profit</div>
-                </div>
-            </div>
-            <div class="chart-bars-container">
-                <div class="bar-group">
-                    <div class="bar sales" style="height: 60%;"></div>
-                    <div class="bar profit" style="height: 30%;"></div>
-                </div>
-                <div class="bar-group">
-                    <div class="bar sales" style="height: 80%;"></div>
-                    <div class="bar profit" style="height: 45%;"></div>
-                </div>
-                <div class="bar-group">
-                    <div class="bar sales" style="height: 50%;"></div>
-                    <div class="bar profit" style="height: 25%;"></div>
-                </div>
-                <div class="bar-group">
-                    <div class="bar sales" style="height: 90%;"></div>
-                    <div class="bar profit" style="height: 55%;"></div>
-                </div>
-                <div class="bar-group">
-                    <div class="bar sales" style="height: 70%;"></div>
-                    <div class="bar profit" style="height: 40%;"></div>
-                </div>
-            </div>
-            <div class="chart-labels">
-                <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span>
-            </div>
-        </div>
-
+        <div class="top-bar"><div class="user-greet"><p>Business Dashboard</p><h1 id="mainShopName">Jawad Pro</h1></div><div class="profile-btn"><span class="material-symbols-rounded">storefront</span></div></div>
+        <div class="premium-card"><div class="card-label">Total Balance (Current Month)</div><div class="card-amount" id="totalBalance">Rs 0</div><div style="font-size: 13px; color: #34D399; font-weight: 600; display: flex; align-items: center; gap: 5px;"><span class="material-symbols-rounded" style="font-size: 18px;">cloud_done</span> Live Connected</div></div>
+        <div class="chart-section"><div class="chart-header"><h3>Sales & Profit</h3><div class="chart-legend"><div><span class="legend-dot" style="background: var(--chart-bar-1);"></span>Sales</div><div><span class="legend-dot" style="background: var(--chart-bar-2);"></span>Profit</div></div></div><div class="chart-bars-container"><div class="bar-group"><div class="bar sales" style="height: 60%;"></div><div class="bar profit" style="height: 30%;"></div></div><div class="bar-group"><div class="bar sales" style="height: 80%;"></div><div class="bar profit" style="height: 45%;"></div></div><div class="bar-group"><div class="bar sales" style="height: 50%;"></div><div class="bar profit" style="height: 25%;"></div></div><div class="bar-group"><div class="bar sales" style="height: 90%;"></div><div class="bar profit" style="height: 55%;"></div></div><div class="bar-group"><div class="bar sales" style="height: 70%;"></div><div class="bar profit" style="height: 40%;"></div></div></div><div class="chart-labels"><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span></div></div>
+        
         <div class="action-grid">
-            <div class="action-item">
-                <div class="action-icon-wrapper"><span class="material-symbols-rounded">content_paste</span></div>
-                <span>Auto Fill<br>Order</span>
-            </div>
-            
-            <div class="action-item">
-                <div class="action-icon-wrapper"><span class="material-symbols-rounded">inventory_2</span></div>
-                <span>Stock<br>Record</span>
-            </div>
-
-            <div class="action-item">
-                <div class="action-icon-wrapper"><span class="material-symbols-rounded">groups</span></div>
-                <span>Customer<br>List</span>
-            </div>
-
-            <div class="action-item">
-                <div class="action-icon-wrapper"><span class="material-symbols-rounded">description</span></div>
-                <span>Google<br>Sheet</span>
-            </div>
-
-            <div class="action-item">
-                <div class="action-icon-wrapper"><span class="material-symbols-rounded">local_shipping</span></div>
-                <span>Courier<br>Print</span>
-            </div>
-
-            <div class="action-item">
-                <div class="action-icon-wrapper" style="color: #16A34A;"><span class="material-symbols-rounded">send</span></div>
-                <span>WhatsApp<br>Order</span>
-            </div>
-
-            <div class="action-item">
-                <div class="action-icon-wrapper"><span class="material-symbols-rounded">pie_chart</span></div>
-                <span>Monthly<br>Hisab</span>
-            </div>
-
-            <div class="action-item">
-                <div class="action-icon-wrapper"><span class="material-symbols-rounded">add_shopping_cart</span></div>
-                <span>New<br>Order</span>
-            </div>
+            <div class="action-item" onclick="openModal('orderModal')"><div class="action-icon-wrapper"><span class="material-symbols-rounded">content_paste</span></div><span>Auto Fill</span></div>
+            <div class="action-item" onclick="openModal('stockModal')"><div class="action-icon-wrapper"><span class="material-symbols-rounded">inventory_2</span></div><span>Stock</span></div>
+            <div class="action-item" onclick="openModal('listModal')"><div class="action-icon-wrapper"><span class="material-symbols-rounded">groups</span></div><span>Customers</span></div>
+            <div class="action-item" onclick="exportToCSV()"><div class="action-icon-wrapper" style="color: #10B981;"><span class="material-symbols-rounded">description</span></div><span>Sheet</span></div>
+            <div class="action-item" onclick="openModal('listModal')"><div class="action-icon-wrapper"><span class="material-symbols-rounded">local_shipping</span></div><span>Print</span></div>
+            <div class="action-item" onclick="sendWhatsApp()"><div class="action-icon-wrapper" style="color: #16A34A;"><span class="material-symbols-rounded">send</span></div><span>WhatsApp</span></div>
+            <div class="action-item" onclick="openModal('hisabModal')"><div class="action-icon-wrapper"><span class="material-symbols-rounded">pie_chart</span></div><span>Hisab</span></div>
+            <div class="action-item" onclick="openModal('orderModal')"><div class="action-icon-wrapper"><span class="material-symbols-rounded">add_shopping_cart</span></div><span>Order</span></div>
         </div>
 
         <div class="bottom-nav">
-            <a href="#" class="nav-btn active"><span class="material-symbols-rounded">home</span></a>
-            <a href="#" class="nav-btn"><span class="material-symbols-rounded">receipt_long</span></a>
-            <a href="#" class="nav-btn"><span class="material-symbols-rounded">chat</span></a>
-            <a href="#" class="nav-btn"><span class="material-symbols-rounded">settings</span></a>
+            <div class="nav-btn active" onclick="switchTab(this); closeModal('settingsModal');"><span class="material-symbols-rounded">home</span></div>
+            <div class="nav-btn" onclick="switchTab(this); openModal('listModal')"><span class="material-symbols-rounded">receipt_long</span></div>
+            <div class="nav-btn" onclick="switchTab(this); exportToCSV()"><span class="material-symbols-rounded">download</span></div>
+            <div class="nav-btn" onclick="switchTab(this); openSettings()"><span class="material-symbols-rounded">settings</span></div>
         </div>
-    </div>"
+    </div>
+    <script>
+        window.openModal = function(id) { document.getElementById(id).style.display = 'flex'; }
+        window.closeModal = function(id) { document.getElementById(id).style.display = 'none'; }
+        window.switchTab = function(btn) { document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+        window.sendWhatsApp = function() { const b = document.getElementById('totalBalance').innerText; window.open(`https://wa.me/?text=Business Update: Total Sales ${b}`); }
+
+        let appSettings = JSON.parse(localStorage.getItem('jawadProSettings')) || { shopName: 'Jawad Pro', deliveryFee: 0, darkMode: false };
+        
+        document.getElementById('mainShopName').innerText = appSettings.shopName;
+        if(appSettings.darkMode) { document.body.classList.add('dark-theme'); document.getElementById('themeToggle').classList.add('active'); }
+
+        window.openSettings = function() {
+            document.getElementById('setShopName').value = appSettings.shopName;
+            document.getElementById('setDeliveryFee').value = appSettings.deliveryFee;
+            openModal('settingsModal');
+        }
+
+        window.saveSettings = function() {
+            appSettings.shopName = document.getElementById('setShopName').value || 'Jawad Pro';
+            appSettings.deliveryFee = Number(document.getElementById('setDeliveryFee').value) || 0;
+            localStorage.setItem('jawadProSettings', JSON.stringify(appSettings));
+            document.getElementById('mainShopName').innerText = appSettings.shopName;
+            alert("✅ Profile Saved!");
+        }
+
+        window.toggleDarkMode = function() {
+            appSettings.darkMode = !appSettings.darkMode;
+            document.body.classList.toggle('dark-theme');
+            document.getElementById('themeToggle').classList.toggle('active');
+            localStorage.setItem('jawadProSettings', JSON.stringify(appSettings));
+        }
+
+        window.autoExtractData = function() {
+            const t = document.getElementById('pasteArea').value;
+            const n = t.match(/Name:\s*(.+)/i); const p = t.match(/Phone:\s*(.+)/i); const a = t.match(/Address:\s*(.+)/i); const i = t.match(/Item:\s*(.+)/i); const pr = t.match(/Price:\s*(\d+)/i);
+            if(n) document.getElementById('custName').value = n[1].trim(); if(p) document.getElementById('custPhone').value = p[1].trim();
+            if(a) document.getElementById('custAddress').value = a[1].trim(); if(i) document.getElementById('productName').value = i[1].trim();
+            if(pr) document.getElementById('productPrice').value = pr[1].trim();
+        }
+
+        window.printSlip = function(name, phone, address, product, price) {
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html><head><title>Print Slip</title>
+                <style>body{font-family:sans-serif; padding:20px;} .box{border:2px solid black; padding:20px; width:300px; border-radius:10px;} h2{margin-top:0; text-transform:uppercase;} </style>
+                </head><body>
+                <div class="box"><h2>${appSettings.shopName}</h2><hr>
+                <p><b>Deliver To:</b><br>${name}<br>${phone}<br>${address}</p>
+                <p><b>Item:</b> ${product}</p><p><b>COD Amount:</b> Rs ${price}</p>
+                <hr><p style="text-align:center; font-size:12px;">Thank you for shopping!</p>
+                </div>
+                <script>window.print(); window.close();<\/script>
+                </body></html>
+            `);
+        }
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script>
+        try {
+            const firebaseConfig = {
+                apiKey: "AIzaSyD2LNJAcWvVyMdN_IrroAbPqrhUIRnsYFE",
+                authDomain: "business-app-38a24.firebaseapp.com",
+                projectId: "business-app-38a24",
+                storageBucket: "business-app-38a24.firebasestorage.app",
+                messagingSenderId: "550821724833",
+                appId: "1:550821724833:web:7c52961c9bcf2f2a9c26e0"
+            };
+
+            if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+            const db = firebase.firestore();
+
+            window.saveOrderToFirebase = function() {
+                const n = document.getElementById('custName').value; const pr = document.getElementById('productPrice').value;
+                if(!n || !pr) { alert("Fill Name & Price!"); return; }
+                document.getElementById('saveBtnText').innerText = "Saving...";
+                db.collection("Orders").add({
+                    customerName: n, phone: document.getElementById('custPhone').value, address: document.getElementById('custAddress').value,
+                    product: document.getElementById('productName').value, price: Number(pr), date: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    alert("✅ Order Saved!"); closeModal('orderModal'); document.getElementById('saveBtnText').innerText = "Save Order";
+                    document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+                }).catch(e => { alert("Error: "+e.message); });
+            }
+
+            window.exportToCSV = function() {
+                db.collection("Orders").orderBy("date", "desc").get().then((querySnapshot) => {
+                    let csv = "Name,Phone,Address,Item,Price\n";
+                    querySnapshot.forEach((doc) => { let d = doc.data(); csv += `"${d.customerName}","${d.phone}","${d.address}","${d.product}",${d.price}\n`; });
+                    const blob = new Blob([csv], { type: 'text/csv' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a'); a.setAttribute('href', url); a.setAttribute('download', 'JawadPro_Orders.csv');
+                    a.click();
+                });
+            }
+
+            window.clearKhata = function() {
+                const conf = confirm("🚨 WARNING: Kya aap waqai sara record delete karna chahte hain? Yeh wapis nahi aayega!");
+                if(conf) {
+                    const btn = document.querySelector('.danger-btn'); btn.innerText = "Deleting...";
+                    db.collection("Orders").get().then((querySnapshot) => {
+                        let batch = db.batch();
+                        querySnapshot.forEach((doc) => { batch.delete(doc.ref); });
+                        batch.commit().then(() => {
+                            alert("🗑️ Khata Clear Ho Gaya!"); closeModal('settingsModal'); btn.innerHTML = `<span class="material-symbols-rounded">delete_forever</span> Clear All Records`;
+                        });
+                    });
+                }
+            }
+
+            window.saveStock = function() {
+                const n = document.getElementById('stockName').value; const q = document.getElementById('stockQty').value;
+                if(!n || !q) return;
+                db.collection("Stock").add({ name: n, qty: Number(q), date: firebase.firestore.FieldValue.serverTimestamp() }).then(()=>{
+                    document.getElementById('stockName').value = ''; document.getElementById('stockQty').value = '';
+                });
+            }
+
+            db.collection("Orders").orderBy("date", "desc").onSnapshot(snapshot => {
+                let total = 0; let totalOrders = 0; let listHTML = "";
+                if(snapshot.empty) listHTML = '<p style="text-align:center; color:#64748B;">No orders yet.</p>';
+                
+                snapshot.forEach(doc => {
+                    const d = doc.data(); if(d.price) { total += d.price; totalOrders++; }
+                    listHTML += `<div class="customer-item">
+                        <div><div class="cust-name">${d.customerName||'Unknown'}</div><div class="cust-details">${d.product||'Item'} | Rs ${d.price||0}</div></div>
+                        <div class="print-icon" onclick="printSlip('${d.customerName}','${d.phone}','${d.address}','${d.product}',${d.price})"><span class="material-symbols-rounded">print</span></div>
+                    </div>`;
+                });
+                
+                document.getElementById('totalBalance').innerText = "Rs " + total.toLocaleString();
+                document.getElementById('customerListContainer').innerHTML = listHTML;
+                
+                let totalExpense = totalOrders * appSettings.deliveryFee;
+                document.getElementById('hisabSales').innerText = "Rs " + total.toLocaleString();
+                document.getElementById('hisabExpense').innerText = "- Rs " + totalExpense.toLocaleString();
+                document.getElementById('hisabProfit').innerText = "Rs " + (total - totalExpense).toLocaleString(); 
+            });
+
+            db.collection("Stock").orderBy("date", "desc").onSnapshot(snapshot => {
+                let list = "";
+                snapshot.forEach(doc => {
+                    const d = doc.data();
+                    list += `<div style="display:flex; justify-content:space-between; padding:8px; border-bottom:1px solid var(--border);"><span>${d.name}</span> <b style="color:var(--primary)">${d.qty} Pcs</b></div>`;
+                });
+                document.getElementById('stockListContainer').innerHTML = list || '<p style="text-align:center; font-size:12px; color:var(--text-muted);">No stock added.</p>';
+            });
+
+        } catch (error) { console.error("Firebase load warning:", error); }
+    </script>
 </body>
 </html>
