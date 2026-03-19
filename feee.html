@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آٹو فیس ویریفیکیشن سسٹم (چیلنج اسائنمنٹ)</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #eef2f3; margin: 0; padding: 20px; }
+        .container { max-width: 400px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin: 0 auto; }
+        h2 { text-align: center; color: #1a73e8; font-size: 20px; margin-bottom: 20px; border-bottom: 2px solid #eef2f3; padding-bottom: 10px; }
+        label { font-size: 14px; color: #333; font-weight: bold; margin-top: 10px; display: block; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        input[type="file"] { border: 1px dashed #1a73e8; background: #f8faff; padding: 15px; cursor: pointer; }
+        .btn { width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .btn:disabled { background-color: #a0c3ff; cursor: not-allowed; }
+        .status-box { margin-top: 20px; padding: 15px; border-radius: 5px; text-align: center; font-weight: bold; display: none; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .loading { text-align: center; font-size: 14px; color: #666; font-style: italic; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🎓 سٹوڈنٹ ایڈمیشن و فیس فارم</h2>
+
+    <label>طالب علم کا نام</label>
+    <input type="text" id="studentName" placeholder="اپنا نام لکھیں">
+
+    <label>فیس بھیجنے کا طریقہ</label>
+    <select id="bankName">
+        <option value="easypaisa">ایزی پیسہ (Easypaisa)</option>
+        <option value="jazzcash">جیز کیش (JazzCash)</option>
+        <option value="meezan">میزان بینک (Meezan Bank)</option>
+    </select>
+
+    <label>فیس کی رسید اپلوڈ کریں (Screenshot)</label>
+    <input type="file" id="receiptImage" accept="image/*">
+
+    <button class="btn" id="submitBtn" onclick="processAdmission()">ایڈمیشن فارم جمع کروائیں</button>
+
+    <div id="loadingText" class="loading">
+        ⏳ سافٹ ویئر رسید کو پڑھ رہا ہے اور بینک API سے رابطہ کر رہا ہے...
+    </div>
+
+    <div id="resultBox" class="status-box"></div>
+</div>
+
+<script>
+    // 1. یہ وہ فرضی ڈیٹا بیس ہے جو مرچنٹ API کے ذریعے بینک سے ہمارے سافٹ ویئر کو ملتا ہے
+    const bankAPI_Database = {
+        "easypaisa": ["11223344556", "99887766554"],
+        "jazzcash": ["00112233445", "55443322110"],
+        "meezan": ["MEZ12345678", "MEZ87654321"]
+    };
+
+    function processAdmission() {
+        let name = document.getElementById('studentName').value;
+        let bank = document.getElementById('bankName').value;
+        let fileInput = document.getElementById('receiptImage');
+        let btn = document.getElementById('submitBtn');
+        let loading = document.getElementById('loadingText');
+        let resultBox = document.getElementById('resultBox');
+
+        if (!name || fileInput.files.length === 0) {
+            alert("براہ کرم اپنا نام لکھیں اور فیس کی رسید اپلوڈ کریں!");
+            return;
+        }
+
+        // پراسیسنگ شروع (یہاں سافٹ ویئر تصویر پڑھے گا اور API چیک کرے گا)
+        btn.disabled = true;
+        resultBox.style.display = "none";
+        loading.style.display = "block";
+
+        // ہم فرضی طور پر 3 سیکنڈ کا ٹائمر لگا رہے ہیں تاکہ سسٹم رسید سکین کرنے اور بینک API سے رابطے کا وقت لے سکے
+        setTimeout(() => {
+            // AI کی مدد سے رسید سے TID نکالنا (ہم یہاں فرضی طور پر ایک TID فرض کر رہے ہیں)
+            // اصل سافٹ ویئر میں یہاں OCR (Optical Character Recognition) کا کوڈ ہوتا ہے
+            
+            // تصادفی طور پر فیصلہ کرنا کہ رسید اصلی ہے یا جعلی (صرف آپ کو دکھانے کے لیے)
+            let isVerified = Math.random() > 0.5; 
+            
+            loading.style.display = "none";
+            resultBox.style.display = "block";
+            btn.disabled = false;
+
+            if (isVerified) {
+                // اگر بینک API نے اوکے کر دیا
+                resultBox.className = "status-box success";
+                resultBox.innerHTML = `✅ <b>تصدیق کامیاب!</b><br>محترم ${name}، آپ کی اپلوڈ کردہ رسید ہمارے ${bank.toUpperCase()} کے بینک API سسٹم سے میچ ہو گئی ہے۔ آپ کا ایڈمیشن کنفرم ہو گیا ہے۔`;
+            } else {
+                // اگر ٹرانزیکشن بینک کے ریکارڈ میں نہ ملی
+                resultBox.className = "status-box error";
+                resultBox.innerHTML = `❌ <b>تصدیق ناکام!</b><br>محترم ${name}، آپ کی اپلوڈ کردہ رسید جعلی ہے یا ہماری بینک API کے مطابق یہ ٹرانزیکشن موجود نہیں ہے۔`;
+            }
+
+        }, 3000); // 3 سیکنڈ کا انتظار
+    }
+</script>
+
+</body>
+</html>

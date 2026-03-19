@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart School ERP - Pro</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7fa; margin: 0; padding: 10px; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #007bff, #0056b3); color: white; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .header h2 { margin: 0; font-size: 22px; }
+        .header p { margin: 5px 0 0; opacity: 0.9; font-size: 14px; }
+
+        /* Section Titles */
+        .section-title { font-size: 16px; font-weight: bold; color: #333; margin: 20px 0 10px 5px; border-left: 4px solid #007bff; padding-left: 10px; }
+        
+        /* Grid Layout */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .card { background: white; padding: 15px 5px; border-radius: 12px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; cursor: pointer; transition: 0.2s; }
+        .card:active { transform: scale(0.96); background: #f8f9fa; }
+        .card i { font-size: 26px; display: block; margin-bottom: 5px; }
+        .card span { font-size: 12px; font-weight: 600; color: #444; }
+
+        .c-student { color: #2ecc71; } .c-teacher { color: #e67e22; } .c-attend { color: #e74c3c; } .c-staff { color: #9b59b6; } .c-report { color: #34495e; }
+
+        /* Login */
+        #loginSection { background: white; padding: 25px; border-radius: 15px; text-align: center; max-width: 350px; margin: 50px auto; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        button { width: 100%; padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; margin-top: 10px; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-success { background: #2ecc71; color: white; }
+        .btn-warning { background: #f39c12; color: white; }
+        .btn-logout { background: #dc3545; color: white; margin-top: 25px; }
+        
+        #dashboardSection { display: none; }
+
+        /* Modal (Popup) */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 20px; border-radius: 12px; width: 90%; max-width: 380px; position: relative; max-height: 80vh; overflow-y: auto; }
+        .close-btn { position: absolute; right: 15px; top: 10px; font-size: 26px; font-weight: bold; color: #dc3545; cursor: pointer; }
+        #modalTitle { color: #007bff; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; font-size: 18px; }
+
+        /* Table for showing Data */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px; text-align: left; }
+        th, td { border: 1px solid #ddd; padding: 8px; }
+        th { background-color: #007bff; color: white; }
+        #dataListArea { display: none; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <div id="loginSection">
+        <h2 style="color: #007bff;">ERP Login</h2>
+        <input type="email" id="email" placeholder="Email (admin@school.com)">
+        <input type="password" id="password" placeholder="Password">
+        <button id="loginBtn" class="btn-primary">Login to ERP</button>
+        <p id="message" style="color: red; font-size: 14px;"></p>
+    </div>
+
+    <div id="dashboardSection">
+        <div class="header">
+            <h2>Govt. Higher Secondary</h2>
+            <p>Smart ERP Control Panel</p>
+        </div>
+
+        <div class="section-title">Academic & Classes</div>
+        <div class="grid">
+            <div class="card" onclick="openModule('Student')"><i class="c-student">👨‍🎓</i><span>Add/View Students</span></div>
+            <div class="card" onclick="alert('Classes List Opening...')"><i class="c-student">🏫</i><span>Classes (6th-12th)</span></div>
+            <div class="card" onclick="alert('Time Table Module...')"><i class="c-student">🕒</i><span>Time Table</span></div>
+            <div class="card" onclick="alert('Class Rooms Module...')"><i class="c-student">🚪</i><span>Class Rooms</span></div>
+        </div>
+
+        <div class="section-title">Attendance System</div>
+        <div class="grid">
+            <div class="card" onclick="alert('Marking Daily Attendance...')"><i class="c-attend">📝</i><span>Mark Daily</span></div>
+            <div class="card" onclick="alert('Loading Attendance Records...')"><i class="c-attend">📂</i><span>Prev Record</span></div>
+            <div class="card" onclick="alert('Generating Daily Report...')"><i class="c-report">📊</i><span>Daily Report</span></div>
+            <div class="card" onclick="alert('Generating Monthly Report...')"><i class="c-report">📅</i><span>Monthly Report</span></div>
+        </div>
+
+        <div class="section-title">Staff Management</div>
+        <div class="grid">
+            <div class="card" onclick="openModule('Teacher')"><i class="c-teacher">👨‍🏫</i><span>Teachers Data</span></div>
+            <div class="card" onclick="alert('Staff Attendance Module...')"><i class="c-teacher">✅</i><span>Staff Attend.</span></div>
+            <div class="card" onclick="openModule('Principal')"><i class="c-staff">👔</i><span>Principal/Admin</span></div>
+            <div class="card" onclick="openModule('Clerk')"><i class="c-staff">💻</i><span>Clerks (Sr/Jr)</span></div>
+            <div class="card" onclick="openModule('ClassFour')"><i class="c-staff">🧹</i><span>Class Four</span></div>
+        </div>
+
+        <button class="btn-logout" id="logoutBtn">Secure Logout</button>
+    </div>
+
+    <div id="dataModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <h3 id="modalTitle">Module Title</h3>
+            
+            <div id="inputArea">
+                <div id="modalInputs"></div>
+                <button id="saveDataBtn" class="btn-success">Save to Database</button>
+            </div>
+
+            <button id="viewListBtn" class="btn-warning" onclick="fetchData()">📋 View Saved List</button>
+            
+            <p id="saveMsg" style="text-align:center; font-size:14px; font-weight:bold; margin:10px 0;"></p>
+
+            <div id="dataListArea"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        // یہاں ہم نے getDocs شامل کیا ہے تاکہ ڈیٹا پڑھ سکیں
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyB4KJ4e2PgJlVfoRjtMIgEGZ5JURPaxsT8",
+          authDomain: "smart-school-erp-1a70c.firebaseapp.com",
+          projectId: "smart-school-erp-1a70c",
+          storageBucket: "smart-school-erp-1a70c.firebasestorage.app",
+          messagingSenderId: "550372576694",
+          appId: "1:550372576694:web:622c5302b31e457b0f8517"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- LOGIN & LOGOUT ---
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const em = document.getElementById('email').value;
+            const pw = document.getElementById('password').value;
+            if(!em || !pw) { alert("Please enter email & password"); return; }
+            document.getElementById('message').innerText = "Logging in...";
+            signInWithEmailAndPassword(auth, em, pw)
+            .then(() => {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('dashboardSection').style.display = 'block';
+            }).catch(() => { document.getElementById('message').innerText = "Wrong Email or Password"; });
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => { 
+            signOut(auth).then(() => location.reload()); 
+        });
+
+        // --- MODULE LOGIC ---
+        let currentCollection = ""; 
+
+        window.openModule = function(type) {
+            const modal = document.getElementById('dataModal');
+            const title = document.getElementById('modalTitle');
+            const inputs = document.getElementById('modalInputs');
+            
+            // پرانی چیزیں ری سیٹ کرنا
+            document.getElementById('saveMsg').innerText = "";
+            document.getElementById('dataListArea').innerHTML = "";
+            document.getElementById('dataListArea').style.display = "none";
+            document.getElementById('inputArea').style.display = "block"; 
+            document.getElementById('viewListBtn').style.display = "block";
+
+            if(type === 'Student') {
+                title.innerText = "Student Management";
+                currentCollection = "students";
+                inputs.innerHTML = `<input type="text" id="inp1" placeholder="Student Name"><input type="text" id="inp2" placeholder="Roll Number"><select id="inp3"><option value="6th">6th Class</option><option value="7th">7th Class</option><option value="8th">8th Class</option><option value="9th">9th Class</option><option value="10th">10th Class</option><option value="11th">11th (1st Year)</option><option value="12th">12th (2nd Year)</option></select>`;
+            } 
+            else if(type === 'Teacher') {
+                title.innerText = "Teacher Management";
+                currentCollection = "teachers";
+                inputs.innerHTML = `<input type="text" id="inp1" placeholder="Teacher Name"><input type="text" id="inp2" placeholder="Subject (e.g., Math, Urdu)"><input type="text" id="inp3" placeholder="Phone Number">`;
+            }
+            else if(type === 'Clerk' || type === 'ClassFour' || type === 'Principal') {
+                title.innerText = type + " Management";
+                currentCollection = "staff";
+                inputs.innerHTML = `<input type="text" id="inp1" placeholder="Staff Name"><input type="text" id="inp2" placeholder="Designation / Duty"><input type="text" id="inp3" placeholder="Shift / Scale">`;
+            }
+            
+            modal.style.display = "flex";
+        }
+
+        window.closeModal = function() { document.getElementById('dataModal').style.display = "none"; }
+
+        // --- SAVE DATA ---
+        document.getElementById('saveDataBtn').addEventListener('click', async () => {
+            const v1 = document.getElementById('inp1').value;
+            const v2 = document.getElementById('inp2').value;
+            const v3 = document.getElementById('inp3').value;
+            const msg = document.getElementById('saveMsg');
+
+            if(!v1 || !v2 || !v3) { msg.style.color = "red"; msg.innerText = "Fill all fields!"; return; }
+            msg.style.color = "blue"; msg.innerText = "Saving...";
+            
+            try {
+                await addDoc(collection(db, currentCollection), {
+                    field1: v1, field2: v2, field3: v3, timestamp: new Date().getTime()
+                });
+                msg.style.color = "green"; msg.innerText = "✅ Saved Successfully!";
+                document.getElementById('inp1').value = ""; // Clear inputs
+                document.getElementById('inp2').value = "";
+            } catch (error) { msg.style.color = "red"; msg.innerText = "Error: " + error.message; }
+        });
+
+        // --- FETCH & VIEW DATA (نیا جادو) ---
+        window.fetchData = async function() {
+            const msg = document.getElementById('saveMsg');
+            const listArea = document.getElementById('dataListArea');
+            
+            // ڈیٹا داخل کرنے والے فارم کو چھپا کر لسٹ دکھائیں
+            document.getElementById('inputArea').style.display = "none";
+            document.getElementById('viewListBtn').style.display = "none";
+            
+            msg.style.color = "blue";
+            msg.innerText = "Loading data from Cloud...";
+            listArea.style.display = "block";
+
+            try {
+                // فائر بیس سے ڈیٹا منگوانے کی کمانڈ
+                const querySnapshot = await getDocs(collection(db, currentCollection));
+                
+                if(querySnapshot.empty) {
+                    listArea.innerHTML = "<p style='text-align:center; color:red;'>No records found!</p>";
+                    msg.innerText = "";
+                    return;
+                }
+
+                // ایک ٹیبل بنانا
+                let html = "<table><tr><th>Name</th><th>Detail 1</th><th>Detail 2</th></tr>";
+                
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    // ہم نے ڈیٹا field1, field2 کے نام سے سیو کیا تھا
+                    html += `<tr>
+                                <td>${data.field1 || 'N/A'}</td>
+                                <td>${data.field2 || 'N/A'}</td>
+                                <td>${data.field3 || 'N/A'}</td>
+                              </tr>`;
+                });
+                
+                html += "</table>";
+                listArea.innerHTML = html;
+                msg.innerText = ""; // clear loading message
+
+            } catch (error) {
+                msg.style.color = "red";
+                msg.innerText = "Failed to load data!";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eye Control Auto-Scroll</title>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+</head>
+<body style="height: 5000px; background: linear-gradient(to bottom, #e0f7fa, #80deea); font-family: sans-serif; padding: 20px;">
+    
+    <h1 style="text-align: center;">آنکھوں سے کنٹرول کا ٹیسٹ</h1>
+    <p style="text-align: center;">کیمرہ آن ہونے کا انتظار کریں... پھر اپنا چہرہ کیمرے کے سامنے رکھیں۔</p>
+    
+    <div style="background: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <ul>
+            <li><b>آنکھیں کھلی:</b> سکرین خودبخود نیچے جائے گی۔</li>
+            <li><b>آنکھیں بند:</b> سکرولنگ رک جائے گی۔</li>
+        </ul>
+        <h2 id="statusText" style="color: green; text-align: center;">سٹیٹس: لوڈ ہو رہا ہے...</h2>
+    </div>
+
+    <video id="videoElement" style="position: fixed; bottom: 20px; right: 20px; width: 120px; border: 3px solid #333; border-radius: 10px; z-index: 1000;" autoplay playsinline></video>
+
+    <script>
+        const videoElement = document.getElementById('videoElement');
+        const statusText = document.getElementById('statusText');
+        
+        let isScrolling = false;
+        let scrollInterval;
+
+        // سکرول شروع کرنے کا فنکشن
+        function startScrolling() {
+            if (!isScrolling) {
+                isScrolling = true;
+                statusText.innerText = "سٹیٹس: آنکھیں کھلی ہیں (چل رہا ہے)";
+                statusText.style.color = "green";
+                // ہر 20 ملی سیکنڈ بعد 2 پکسل نیچے جائے گا (سپیڈ)
+                scrollInterval = setInterval(() => {
+                    window.scrollBy(0, 2); 
+                }, 20);
+            }
+        }
+
+        // سکرول روکنے کا فنکشن
+        function stopScrolling() {
+            if (isScrolling) {
+                isScrolling = false;
+                statusText.innerText = "سٹیٹس: آنکھیں بند ہیں (رکا ہوا)";
+                statusText.style.color = "red";
+                clearInterval(scrollInterval);
+            }
+        }
+
+        // MediaPipe Face Mesh کی سیٹنگ
+        const faceMesh = new FaceMesh({locateFile: (file) => {
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+        }});
+
+        faceMesh.setOptions({
+            maxNumFaces: 1,
+            refineLandmarks: true, // آنکھوں کی باریک ٹریکنگ کے لیے ضروری ہے
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5
+        });
+
+        // جب چہرہ پہچانا جائے
+        faceMesh.onResults((results) => {
+            if (results.multiFaceLandmarks && results.multiFaceLandmarks.length > 0) {
+                const landmarks = results.multiFaceLandmarks[0];
+                
+                // بائیں آنکھ کے اوپر اور نیچے کے پوائنٹس
+                const leftEyeTop = landmarks[159].y;
+                const leftEyeBottom = landmarks[145].y;
+                
+                // دائیں آنکھ کے اوپر اور نیچے کے پوائنٹس
+                const rightEyeTop = landmarks[386].y;
+                const rightEyeBottom = landmarks[374].y;
+
+                // آنکھوں کے کھلنے کا فاصلہ چیک کرنا
+                const leftEyeDistance = Math.abs(leftEyeBottom - leftEyeTop);
+                const rightEyeDistance = Math.abs(rightEyeBottom - rightEyeTop);
+                
+                const avgDistance = (leftEyeDistance + rightEyeDistance) / 2;
+
+                // اگر فاصلہ 0.010 سے کم ہو جائے تو مطلب آنکھیں بند ہیں
+                if (avgDistance < 0.010) {
+                    stopScrolling();
+                } else {
+                    startScrolling();
+                }
+            } else {
+                // اگر کیمرے سے چہرہ ہٹ جائے تب بھی سکرولنگ روک دیں
+                stopScrolling();
+            }
+        });
+
+        // کیمرہ آن کریں
+        const camera = new Camera(videoElement, {
+            onFrame: async () => {
+                await faceMesh.send({image: videoElement});
+            },
+            width: 320,
+            height: 240
+        });
+        
+        camera.start();
+    </script>
+</body>
+</html>

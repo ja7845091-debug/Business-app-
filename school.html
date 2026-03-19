@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart School ERP</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 90%; max-width: 400px; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.3s; }
+        .btn-login { background-color: #007bff; color: white; }
+        .btn-login:hover { background-color: #0056b3; }
+        
+        /* Dashboard Styles */
+        .dashboard { display: none; } /* شروع میں چھپا ہوا ہوگا */
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .card { background: #f8f9fa; padding: 20px; border-radius: 12px; border: 1px solid #eee; cursor: pointer; transition: 0.2s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .card i { font-size: 24px; display: block; margin-bottom: 10px; }
+        .btn-logout { background-color: #dc3545; color: white; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="loginSection" class="container">
+        <h2 style="color: #007bff;">Smart School Login</h2>
+        <input type="email" id="email" placeholder="Email Address">
+        <input type="password" id="password" placeholder="Password">
+        <button id="loginBtn" class="btn-login">Login to Dashboard</button>
+        <p id="message" style="color: red; font-size: 14px; margin-top: 15px;"></p>
+    </div>
+
+    <div id="dashboardSection" class="container dashboard">
+        <h2 id="welcomeText">Welcome, Admin!</h2>
+        <p style="color: #666;">School Management System</p>
+        
+        <div class="grid">
+            <div class="card" onclick="alert('Student Section Coming Soon!')">👤<br>Students</div>
+            <div class="card" onclick="alert('Fee Section Coming Soon!')">💰<br>Fees</div>
+            <div class="card" onclick="alert('Attendance Section Coming Soon!')">📅<br>Attendance</div>
+            <div class="card" onclick="alert('Reports Coming Soon!')">📊<br>Reports</div>
+        </div>
+
+        <button id="logoutBtn" class="btn-logout">Logout</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+        // آپ کا فائر بیس کنکشن
+        const firebaseConfig = {
+          apiKey: "AIzaSyB4KJ4e2PgJlVfoRjtMIgEGZ5JURPaxsT8",
+          authDomain: "smart-school-erp-1a70c.firebaseapp.com",
+          projectId: "smart-school-erp-1a70c",
+          storageBucket: "smart-school-erp-1a70c.firebasestorage.app",
+          messagingSenderId: "550372576694",
+          appId: "1:550372576694:web:622c5302b31e457b0f8517"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        const loginSection = document.getElementById('loginSection');
+        const dashboardSection = document.getElementById('dashboardSection');
+        const msg = document.getElementById('message');
+
+        // Login Logic
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            msg.style.color = "blue";
+            msg.innerText = "Checking Credentials...";
+
+            signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                loginSection.style.display = 'none';
+                dashboardSection.style.display = 'block';
+            })
+            .catch((error) => {
+                msg.style.color = "red";
+                msg.innerText = "Error: Invalid Email or Password";
+            });
+        });
+
+        // Logout Logic
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                dashboardSection.style.display = 'none';
+                loginSection.style.display = 'block';
+                document.getElementById('email').value = "";
+                document.getElementById('password').value = "";
+                msg.innerText = "";
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="docHtml">
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Jameel+Noori+Nastaleeq&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #4338ca; --secondary: #10b981; --dark: #1e293b; --bg: #f8fafc; --card: #ffffff; --text: #334155; --border: #e2e8f0; }
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; display: flex; color: var(--text); height: 100vh; overflow: hidden; transition: 0.3s; }
+    .ur-active { font-family: 'Jameel Noori Nastaleeq', 'Inter', sans-serif; }
+    
+    /* Layout */
+    .sidebar { width: 260px; background: var(--dark); color: white; display: flex; flex-direction: column; padding: 20px 10px; transition: 0.3s; z-index: 100; }
+    .main { flex: 1; display: flex; flex-direction: column; overflow-y: auto; padding-bottom: 20px; }
+    
+    /* Top Header */
+    .topbar { background: var(--card); padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 50; }
+    .lang-btn { background: #e0e7ff; color: var(--primary); border: none; padding: 8px 16px; border-radius: 20px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .lang-btn:hover { background: var(--primary); color: white; }
+
+    /* Brand Logo */
+    .brand { text-align: center; margin-bottom: 30px; }
+    .brand-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), #8b5cf6); border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; margin-bottom: 10px; box-shadow: 0 4px 10px rgba(67, 56, 202, 0.3); }
+    
+    /* Navigation */
+    .nav-btn { background: transparent; color: #94a3b8; border: none; padding: 14px 20px; margin: 4px 0; border-radius: 10px; cursor: pointer; font-size: 15px; font-weight: 600; text-align: left; transition: 0.2s; display: flex; align-items: center; gap: 10px; }
+    .nav-btn:hover { background: rgba(255,255,255,0.05); color: white; }
+    .nav-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(67, 56, 202, 0.4); }
+    .ur-active .nav-btn { text-align: right; flex-direction: row-reverse; }
+
+    /* Sections & Cards */
+    .content { padding: 25px; }
+    .section { display: none; animation: slideUp 0.4s ease; }
+    .section.active { display: block; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card { background: var(--card); padding: 25px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 25px; border-top: 4px solid var(--primary); }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    
+    /* Stats Design */
+    .stat-box { padding: 20px; border-radius: 16px; background: #f8fafc; border: 1px solid var(--border); display: flex; align-items: center; gap: 15px; }
+    .stat-icon { width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; }
+    .stat-box h3 { margin: 0; font-size: 32px; color: var(--dark); }
+    .stat-box p { margin: 0; font-size: 14px; color: #64748b; font-weight: 600; text-transform: uppercase; }
+
+    /* Tables & Forms */
+    input, select { width: 100%; padding: 12px 15px; margin: 8px 0; border: 1px solid var(--border); border-radius: 10px; font-size: 14px; outline: none; transition: 0.2s; background: #f8fafc; }
+    input:focus, select:focus { border-color: var(--primary); background: white; box-shadow: 0 0 0 3px rgba(67,56,202,0.1); }
+    .btn { background: var(--primary); color: white; padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 15px; transition: 0.2s; width: 100%; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(67,56,202,0.3); }
+    
+    .table-responsive { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; direction: ltr; text-align: left; }
+    th { background: #f1f5f9; padding: 15px; font-size: 13px; color: #475569; text-transform: uppercase; }
+    td { padding: 15px; border-bottom: 1px solid var(--border); font-size: 14px; }
+    .badge { background: #e0e7ff; color: var(--primary); padding: 5px 12px; border-radius: 20px; font-weight: 600; font-size: 12px; }
+
+    /* Attendance Radio */
+    .att-options { display: flex; gap: 15px; }
+    .att-options label { display: flex; align-items: center; gap: 5px; cursor: pointer; font-weight: 600; font-size: 13px; }
+
+    /* AI Animations */
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .ai-step { border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 10px; display: flex; align-items: center; background: white; }
+    .ai-icon { width: 24px; height: 24px; border-radius: 50%; margin-right: 15px; display: flex; justify-content: center; align-items: center; font-size: 14px; font-weight: bold; }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      .brand, .nav-btn span { display: none; }
+      .hide-mobile { display: none !important; }
+      .sidebar { flex-direction: row; justify-content: space-around; width: 100%; height: auto; padding: 10px; position: fixed; bottom: 0; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index: 1000; }
+      .nav-btn { flex-direction: column; padding: 8px; font-size: 20px; border-radius: 12px; width: 50px; justify-content: center; margin:0; }
+      .main { padding-bottom: 70px; }
+      .stat-box { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">GH</div>
+      <h3 style="margin:0; font-size:16px;">Kaghan ERP</h3>
+    </div>
+    <button class="nav-btn active" onclick="switchTab('dashboard', this)">🏢 <span class="lang" data-en="Principal" data-ur="پرنسپل آفس">Principal</span></button>
+    <button class="nav-btn" onclick="switchTab('students', this)">🎓 <span class="lang" data-en="Students" data-ur="طلباء و داخلہ">Students</span></button>
+    <button class="nav-btn" onclick="switchTab('teachers', this)">👨‍🏫 <span class="lang" data-en="Teachers" data-ur="اساتذہ">Teachers</span></button>
+    <button class="nav-btn" onclick="switchTab('attendance', this)">📋 <span class="lang" data-en="Attendance" data-ur="حاضری">Attendance</span></button>
+    <button class="nav-btn" style="color:#10b981;" onclick="switchTab('aiSearch', this)">✨ <span class="lang" data-en="AI Search" data-ur="سمارٹ سرچ">AI Search</span></button>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div>
+        <h2 style="margin:0; font-size:20px; color:var(--dark);" id="pageTitle" class="lang" data-en="Principal Dashboard" data-ur="پرنسپل ڈیش بورڈ">Principal Dashboard</h2>
+        <p style="margin:0; font-size:12px; color:#64748b;">Govt. Higher Secondary School Kaghan</p>
+      </div>
+      <button class="lang-btn" onclick="toggleLanguage()" id="langBtn">اردو - UR</button>
+    </div>
+
+    <div class="content">
+      
+      <div id="dashboard" class="section active">
+        
+        <div style="background: linear-gradient(135deg, #4338ca, #8b5cf6); border-radius: 20px; padding: 30px; color: white; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 20px rgba(67, 56, 202, 0.2);">
+          <div>
+            <h2 style="margin:0 0 10px 0; font-size: 24px;">Welcome to Kaghan ERP 👋</h2>
+            <p style="margin:0; opacity: 0.9; max-width: 400px; line-height: 1.6;" class="lang" data-en="Manage your school operations smoothly. Quick actions and live stats are available below." data-ur="اپنے سکول کے تمام معاملات باآسانی کنٹرول کریں۔ حاضری اور داخلے کے فوری شارٹ کٹس استعمال کریں۔">Manage your school operations smoothly...</p>
+          </div>
+          <div style="font-size: 60px; opacity: 0.9;" class="hide-mobile">🏫</div>
+        </div>
+
+        <div class="grid-2" style="margin-bottom: 25px;">
+          <div class="stat-box">
+            <div class="stat-icon" style="background:#e0e7ff; color:var(--primary);">👨‍🎓</div>
+            <div><p class="lang" data-en="Total Students" data-ur="کل طلباء">Total Students</p><h3 id="dashStd">0</h3></div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-icon" style="background:#dcfce7; color:#10b981;">👨‍🏫</div>
+            <div><p class="lang" data-en="Total Teachers" data-ur="کل اساتذہ">Total Teachers</p><h3 id="dashTch">0</h3></div>
+          </div>
+        </div>
+        
+        <h3 class="lang" data-en="Quick Actions" data-ur="فوری شارٹ کٹس" style="margin-bottom: 15px; color: var(--dark);">Quick Actions</h3>
+        <div class="grid-2">
+           <div class="card" style="margin-bottom:0; cursor:pointer; text-align:center; padding: 20px; transition:0.3s; border-top:none;" onclick="document.querySelectorAll('.nav-btn')[1].click()">
+              <div style="font-size:35px; margin-bottom:10px;">📝</div>
+              <h4 style="margin:0; color:var(--dark);" class="lang" data-en="Add New Student" data-ur="نیا داخلہ کریں">Add New Student</h4>
+           </div>
+           <div class="card" style="margin-bottom:0; cursor:pointer; text-align:center; padding: 20px; transition:0.3s; border-top:none;" onclick="document.querySelectorAll('.nav-btn')[3].click()">
+              <div style="font-size:35px; margin-bottom:10px;">📋</div>
+              <h4 style="margin:0; color:var(--dark);" class="lang" data-en="Mark Attendance" data-ur="حاضری لگائیں">Mark Attendance</h4>
+           </div>
+        </div>
+      </div>
+
+      <div id="students" class="section">
+        <div class="card">
+          <h3 class="lang" data-en="New Admission" data-ur="نیا داخلہ">New Admission</h3>
+          <div class="grid-2">
+            <input type="number" id="sRoll" placeholder="Roll Number">
+            <input type="text" id="sName" placeholder="Student Name">
+            <input type="text" id="sFName" placeholder="Father Name">
+            <select id="sClass">
+              <option value="6th">6th Class</option><option value="7th">7th Class</option>
+              <option value="8th">8th Class</option><option value="9th">9th Class</option>
+              <option value="10th">10th Class</option><option value="11th">11th Class</option>
+              <option value="12th">12th Class</option>
+            </select>
+          </div>
+          <button class="btn" style="margin-top:15px;" onclick="saveStudent()" id="btnSaveStd">
+            <span class="lang" data-en="Save Student" data-ur="محفوظ کریں">Save Student</span>
+          </button>
+        </div>
+        <div class="card">
+          <h3 class="lang" data-en="Student Records" data-ur="طلباء کا ریکارڈ">Student Records</h3>
+          <div class="table-responsive">
+            <table>
+              <thead><tr><th>Roll#</th><th>Name</th><th>Father</th><th>Class</th></tr></thead>
+              <tbody id="tblStudents"><tr><td colspan="4" style="text-align:center;">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="teachers" class="section">
+        <div class="card">
+          <h3 class="lang" data-en="Add New Teacher" data-ur="اساتذہ کا اندراج">Add New Teacher</h3>
+          <div class="grid-2">
+            <input type="text" id="tName" placeholder="Teacher Name">
+            <input type="text" id="tSubj" placeholder="Subject (e.g. Maths, Urdu)">
+            <input type="text" id="tPhone" placeholder="Phone Number">
+          </div>
+          <button class="btn" style="margin-top:15px;" onclick="saveTeacher()" id="btnSaveTch">
+            <span class="lang" data-en="Save Teacher" data-ur="محفوظ کریں">Save Teacher</span>
+          </button>
+        </div>
+        <div class="card">
+          <h3 class="lang" data-en="Teachers List" data-ur="اساتذہ کی فہرست">Teachers List</h3>
+          <div class="table-responsive">
+            <table>
+              <thead><tr><th>Name</th><th>Subject</th><th>Phone</th><th>Status</th></tr></thead>
+              <tbody id="tblTeachers"><tr><td colspan="4" style="text-align:center;">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="attendance" class="section">
+        <div class="card">
+          <h3 class="lang" data-en="Mark Daily Attendance" data-ur="روزانہ کی حاضری">Mark Daily Attendance</h3>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
+            <input type="date" id="attDate" style="flex:1; min-width:150px;">
+            <select id="attClass" style="flex:1; min-width:150px;" onchange="loadAttendanceList()">
+              <option value="">-- Select Class --</option>
+              <option value="6th">6th Class</option><option value="7th">7th Class</option>
+              <option value="8th">8th Class</option><option value="9th">9th Class</option>
+              <option value="10th">10th Class</option><option value="11th">11th Class</option>
+              <option value="12th">12th Class</option>
+            </select>
+          </div>
+          <div class="table-responsive">
+            <table>
+              <thead><tr><th>Roll#</th><th>Name</th><th>Status (P/A/L)</th></tr></thead>
+              <tbody id="tblAttendance">
+                <tr><td colspan="3" style="text-align:center;" class="lang" data-en="Select a class first" data-ur="پہلے کلاس سیلکٹ کریں">Select a class first</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <button class="btn" style="margin-top:20px;" onclick="submitAttendance()" id="btnSaveAtt">
+            <span class="lang" data-en="Submit Attendance" data-ur="حاضری محفوظ کریں">Submit Attendance</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="aiSearch" class="section">
+        <div class="card">
+          <h3 style="color:var(--secondary); margin-top:0;">✨ AI Smart Search</h3>
+          <p style="color:#64748b;" class="lang" data-en="Ask any educational question, translate, or write essays." data-ur="کوئی بھی تعلیمی سوال پوچھیں، ترجمہ کریں یا مضمون لکھوائیں۔">Ask anything...</p>
+          <input type="text" id="aiInput" placeholder="Write topic here (e.g. Write an essay on Iqbal)..." style="font-size:16px; padding:15px;">
+          <button class="btn" style="background:var(--secondary); margin-top:10px;" onclick="runAI()" id="btnAI">Search & Generate</button>
+          
+          <div id="aiProgressBox" style="display:none; margin-top: 25px;">
+            <div class="ai-step">
+              <div id="icon1" class="ai-icon" style="border:2px solid var(--primary); border-top-color:transparent; animation:spin 1s linear infinite;"></div>
+              <div>
+                <div style="font-weight:bold; font-size:14px; color:#1e293b;" class="lang" data-en="Analyzing Query..." data-ur="سوال کو سمجھا جا رہا ہے...">Analyzing Query...</div>
+                <div id="sub1" style="font-size:12px; color:#64748b;">Processing...</div>
+              </div>
+            </div>
+            <div class="ai-step" style="background:#f8fafc;">
+              <div id="icon2" class="ai-icon" style="border:2px solid #cbd5e1;"></div>
+              <div>
+                <div style="font-weight:bold; font-size:14px; color:#1e293b;" class="lang" data-en="Generating Response..." data-ur="جواب تیار ہو رہا ہے...">Generating Response...</div>
+                <div id="sub2" style="font-size:12px; color:#64748b;">Waiting...</div>
+              </div>
+            </div>
+          </div>
+
+          <div id="aiResult" style="display:none; margin-top:20px; padding:20px; background:#f8fafc; border-radius:12px; border-left:4px solid var(--secondary); white-space:pre-wrap; line-height:1.8;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let currentLang = 'en';
+    let stdData = [];
+    
+    // 1. Language Toggle
+    function toggleLanguage() {
+      const html = document.getElementById('docHtml');
+      const btn = document.getElementById('langBtn');
+      
+      if(currentLang === 'en') {
+        currentLang = 'ur';
+        html.dir = 'rtl';
+        document.body.classList.add('ur-active');
+        btn.innerText = 'English - EN';
+      } else {
+        currentLang = 'en';
+        html.dir = 'ltr';
+        document.body.classList.remove('ur-active');
+        btn.innerText = 'اردو - UR';
+      }
+      
+      document.querySelectorAll('.lang').forEach(el => {
+        el.innerText = el.getAttribute(`data-${currentLang}`);
+      });
+      document.getElementById('attDate').valueAsDate = new Date();
+    }
+
+    // 2. Tab Switcher (BUG FIXED: Passed 'btnElement' to avoid mobile crashes)
+    function switchTab(tabId, btnElement) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btnElement.classList.add('active');
+      
+      const titleSpan = btnElement.querySelector('.lang');
+      if(titleSpan) {
+        document.getElementById('pageTitle').innerText = titleSpan.getAttribute(`data-${currentLang}`);
+      }
+    }
+
+    // 3. Load Data on Startup
+    window.onload = function() {
+      document.getElementById('attDate').valueAsDate = new Date();
+      loadDashboard();
+      loadStudents();
+      loadTeachers();
+    }
+
+    function loadDashboard() {
+      google.script.run.withSuccessHandler(res => {
+        let data = JSON.parse(res);
+        document.getElementById('dashStd').innerText = data.students;
+        document.getElementById('dashTch').innerText = data.teachers;
+      }).getDashboardStats();
+    }
+
+    // 4. Students Logic
+    function loadStudents() {
+      google.script.run.withSuccessHandler(res => {
+        stdData = JSON.parse(res);
+        let html = '';
+        for(let i=1; i<stdData.length; i++) {
+          if(stdData[i][0]) html += `<tr><td><b>${stdData[i][0]}</b></td><td>${stdData[i][1]}</td><td>${stdData[i][2]}</td><td><span class="badge">${stdData[i][3]}</span></td></tr>`;
+        }
+        document.getElementById('tblStudents').innerHTML = html || '<tr><td colspan="4">No Data</td></tr>';
+      }).getStudentsData();
+    }
+
+    function saveStudent() {
+      let r = document.getElementById('sRoll').value, n = document.getElementById('sName').value, f = document.getElementById('sFName').value, c = document.getElementById('sClass').value;
+      if(!r || !n) return alert("Please enter Roll No and Name!");
+      
+      document.getElementById('btnSaveStd').innerText = "Saving...";
+      google.script.run.withSuccessHandler(() => {
+        document.getElementById('sRoll').value = ''; document.getElementById('sName').value = ''; document.getElementById('sFName').value = '';
+        document.getElementById('btnSaveStd').innerText = "Saved!";
+        setTimeout(() => document.getElementById('btnSaveStd').innerText = "Save Student", 2000);
+        loadStudents(); loadDashboard();
+      }).addStudentToSheet(r, n, f, c);
+    }
+
+    // 5. Teachers Logic
+    function loadTeachers() {
+      google.script.run.withSuccessHandler(res => {
+        let data = JSON.parse(res);
+        let html = '';
+        for(let i=1; i<data.length; i++) {
+          if(data[i][0]) html += `<tr><td><b>${data[i][0]}</b></td><td>${data[i][1]}</td><td>${data[i][2]}</td><td><span class="badge" style="background:#dcfce7; color:#10b981;">${data[i][3]}</span></td></tr>`;
+        }
+        document.getElementById('tblTeachers').innerHTML = html || '<tr><td colspan="4">No Data</td></tr>';
+      }).getTeacher

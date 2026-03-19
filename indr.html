@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>گورنمنٹ ہائر سیکنڈری اسکول کاغان - مین رجسٹر</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap');
+        
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; }
+        
+        /* ہیڈر اور مینو */
+        .header { background: #fff; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border-bottom: 4px solid #4e73df; }
+        .header h1 { margin: 0; color: #4e73df; font-family: 'Noto Nastaliq Urdu', serif; font-size: 22px; }
+        
+        .navbar { display: flex; background: #4e73df; padding: 10px; overflow-x: auto; white-space: nowrap; }
+        .navbar button { 
+            flex: 1; padding: 12px; background: transparent; border: none; color: white; 
+            font-size: 16px; cursor: pointer; font-weight: bold; border-radius: 5px;
+        }
+        .navbar button.active { background: white; color: #4e73df; }
+
+        .container { padding: 20px; max-width: 900px; margin: auto; }
+        .section { display: none; }
+        .section.active { display: block; }
+
+        /* باکس اور فارم */
+        .box { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-top: 3px solid #4e73df; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+        .btn-main { width: 100%; padding: 12px; background: #4e73df; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        .btn-main:hover { background: #2e59d9; }
+        
+        /* ٹیبل (رجسٹر کا انداز) */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 12px; text-align: center; border: 1px solid #ddd; }
+        th { background: #f8f9fc; color: #333; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        
+        /* بٹنز */
+        .btn-p { background: #1cc88a; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;}
+        .btn-l { background: #f6c23e; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;}
+        .btn-a { background: #e74a3b; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;}
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>گورنمنٹ ہائر سیکنڈری اسکول کاغان</h1>
+    </div>
+
+    <div class="navbar">
+        <button class="tab-btn active" onclick="switchTab('student-register')">اسٹوڈنٹ رجسٹر</button>
+        <button class="tab-btn" onclick="switchTab('attendance-register')">حاضری رجسٹر</button>
+        <button class="tab-btn" onclick="switchTab('teacher-register')">اساتذہ</button>
+    </div>
+
+    <div class="container">
+
+        <div id="student-register" class="section active">
+            <div class="box">
+                <h3 style="margin-top: 0; color: #4e73df;">نئے طالب علم کا داخلہ کریں</h3>
+                <input type="text" id="stdName" placeholder="طالب علم کا نام لکھیں">
+                <input type="number" id="stdRoll" placeholder="رول نمبر لکھیں">
+                <select id="stdClass">
+                    <option value="" disabled selected>کلاس منتخب کریں...</option>
+                    <option value="6th">چھٹی کلاس (6th)</option>
+                    <option value="7th">ساتویں کلاس (7th)</option>
+                    <option value="8th">آٹھویں کلاس (8th)</option>
+                    <option value="9th">نویں کلاس (9th)</option>
+                    <option value="10th">دسویں کلاس (10th)</option>
+                    <option value="11th">گیارہویں کلاس (11th)</option>
+                    <option value="12th">بارہویں کلاس (12th)</option>
+                </select>
+                <button class="btn-main" onclick="admitStudent()">رجسٹر میں محفوظ کریں</button>
+            </div>
+
+            <div class="box">
+                <h3 style="margin-top: 0;">کلاس کا رجسٹر دیکھیں</h3>
+                <select id="viewClass" onchange="showClassRegister()">
+                    <option value="" disabled selected>کلاس منتخب کریں...</option>
+                    <option value="6th">چھٹی کلاس (6th)</option>
+                    <option value="7th">ساتویں کلاس (7th)</option>
+                    <option value="8th">آٹھویں کلاس (8th)</option>
+                    <option value="9th">نویں کلاس (9th)</option>
+                    <option value="10th">دسویں کلاس (10th)</option>
+                    <option value="11th">گیارہویں کلاس (11th)</option>
+                    <option value="12th">بارہویں کلاس (12th)</option>
+                </select>
+                <table>
+                    <thead><tr><th>رول نمبر</th><th>نام</th><th>کلاس</th></tr></thead>
+                    <tbody id="classRegisterBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="attendance-register" class="section">
+            <div class="box">
+                <h3 style="margin-top: 0; color: #4e73df;">آج کی حاضری لگائیں</h3>
+                <select id="attendanceClass" onchange="openAttendanceRegister()">
+                    <option value="" disabled selected>حاضری کے لیے کلاس منتخب کریں...</option>
+                    <option value="6th">چھٹی کلاس (6th)</option>
+                    <option value="7th">ساتویں کلاس (7th)</option>
+                    <option value="8th">آٹھویں کلاس (8th)</option>
+                    <option value="9th">نویں کلاس (9th)</option>
+                    <option value="10th">دسویں کلاس (10th)</option>
+                    <option value="11th">گیارہویں کلاس (11th)</option>
+                    <option value="12th">بارہویں کلاس (12th)</option>
+                </select>
+            </div>
+
+            <div class="box" id="attendanceBox" style="display: none;">
+                <h3 id="attendanceTitle" style="margin-top: 0;">حاضری رجسٹر</h3>
+                <table>
+                    <thead><tr><th>رول نمبر</th><th>نام</th><th>حاضری لگائیں</th></tr></thead>
+                    <tbody id="attendanceBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="teacher-register" class="section">
+            <div class="box">
+                <h3 style="margin-top: 0;">اساتذہ کا ریکارڈ</h3>
+                <p>یہاں اساتذہ کا ڈیٹا آئے گا (یہ سیکشن ویسا ہی ہے جیسا پہلے تھا)</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // اسکول کا مین ڈیٹا بیس (یہاں تمام کلاسز کے بچوں کا ریکارڈ رہے گا)
+        let schoolData = {
+            "6th": [], "7th": [], "8th": [], "9th": [], "10th": [], "11th": [], "12th": []
+        };
+
+        // مینو تبدیل کرنے کا فنکشن
+        function switchTab(tabId) {
+            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // طالب علم کو اس کی کلاس میں داخل کرنے کا فنکشن
+        function admitStudent() {
+            let name = document.getElementById("stdName").value;
+            let roll = document.getElementById("stdRoll").value;
+            let stdClass = document.getElementById("stdClass").value;
+
+            if(name === "" || roll === "" || stdClass === "") {
+                alert("براہ کرم تمام خانے پُر کریں!");
+                return;
+            }
+
+            // بچے کو اس کی مخصوص کلاس کے رجسٹر میں شامل کر دیا
+            schoolData[stdClass].push({ roll: roll, name: name });
+
+            // خانے خالی کر دیے
+            document.getElementById("stdName").value = "";
+            document.getElementById("stdRoll").value = "";
+            document.getElementById("stdClass").value = "";
+
+            alert("طالب علم رجسٹر میں شامل ہو گیا!");
+            
+            // اگر وہی کلاس کھلی ہے تو لسٹ اپڈیٹ کر دیں
+            if(document.getElementById("viewClass").value === stdClass) {
+                showClassRegister();
+            }
+        }
+
+        // کلاس کا رجسٹر دیکھنے کا فنکشن
+        function showClassRegister() {
+            let selectedClass = document.getElementById("viewClass").value;
+            let students = schoolData[selectedClass];
+            let tbody = document.getElementById("classRegisterBody");
+            
+            tbody.innerHTML = ""; // پرانا ڈیٹا صاف کریں
+
+            if(students.length === 0) {
+                tbody.innerHTML = "<tr><td colspan='3'>اس کلاس میں ابھی کوئی طالب علم نہیں ہے۔</td></tr>";
+                return;
+            }
+
+            // کلاس کے بچے لسٹ میں دکھائیں
+            students.forEach(std => {
+                let row = `<tr><td>${std.roll}</td><td>${std.name}</td><td>${selectedClass}</td></tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // حاضری کے لیے کلاس کھولنے کا فنکشن
+        function openAttendanceRegister() {
+            let selectedClass = document.getElementById("attendanceClass").value;
+            let students = schoolData[selectedClass];
+            let tbody = document.getElementById("attendanceBody");
+            
+            document.getElementById("attendanceTitle").innerText = selectedClass + " - حاضری رجسٹر";
+            document.getElementById("attendanceBox").style.display = "block";
+            tbody.innerHTML = "";
+
+            if(students.length === 0) {
+                tbody.innerHTML = "<tr><td colspan='3'>اس کلاس میں کوئی طالب علم نہیں ہے۔ پہلے اسٹوڈنٹ رجسٹر میں داخلہ کریں۔</td></tr>";
+                return;
+            }
+
+            // حاضری کی لسٹ بنائیں
+            students.forEach(std => {
+                let row = `<tr>
+                    <td>${std.roll}</td>
+                    <td>${std.name}</td>
+                    <td>
+                        <button class="btn-p" onclick="markAtt(this, 'حاضر', '#1cc88a')">P</button>
+                        <button class="btn-l" onclick="markAtt(this, 'چھٹی', '#f6c23e')">L</button>
+                        <button class="btn-a" onclick="markAtt(this, 'غیر حاضر', '#e74a3b')">A</button>
+                    </td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // حاضری کا اسٹیٹس تبدیل کرنے کا فنکشن
+        function markAtt(btn, status, color) {
+            let cell = btn.parentElement;
+            cell.innerHTML = `<span style="color: ${color}; font-weight: bold; font-size: 16px;">${status}</span>`;
+        }
+    </script>
+
+</body>
+</html>

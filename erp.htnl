@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart School ERP - Pro</title>
+    <style>
+        body { font-family: 'Poppins', sans-serif; background-color: #f4f7fa; margin: 0; padding: 10px; }
+        .header { background: #007bff; color: white; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .section-title { font-size: 18px; font-weight: bold; color: #333; margin: 20px 0 10px 5px; border-left: 4px solid #007bff; padding-left: 10px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .card { background: white; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border: 1px solid #eee; cursor: pointer; transition: 0.2s; }
+        .card:active { transform: scale(0.95); background: #f0f0f0; }
+        .card i { font-size: 28px; display: block; margin-bottom: 8px; }
+        .card span { font-size: 13px; font-weight: 600; color: #444; }
+
+        /* Color Themes for Categories */
+        .c-student { color: #2ecc71; }
+        .c-teacher { color: #e67e22; }
+        .c-attendance { color: #e74c3c; }
+        .c-admin { color: #9b59b6; }
+        .c-report { color: #34495e; }
+
+        .btn-logout { width: 100%; padding: 15px; background: #333; color: white; border: none; border-radius: 10px; margin-top: 30px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="loginArea">
+        </div>
+
+    <div id="mainDashboard">
+        <div class="header">
+            <h2 style="margin:0;">Smart School ERP</h2>
+            <p style="margin:5px 0 0; opacity:0.8;">Admin Control Panel</p>
+        </div>
+
+        <div class="section-title">Academic & Classes</div>
+        <div class="grid">
+            <div class="card" onclick="openModule('Classes 6-12')"><i class="c-student">🏫</i><span>Classes (6th-12th)</span></div>
+            <div class="card" onclick="openModule('Rooms')"><i class="c-student">🚪</i><span>Class Rooms</span></div>
+            <div class="card" onclick="openModule('Time Table')"><i class="c-student">🕒</i><span>Time Table</span></div>
+            <div class="card" onclick="openModule('Students')"><i class="c-student">👨‍🎓</i><span>Student Records</span></div>
+        </div>
+
+        <div class="section-title">Attendance System</div>
+        <div class="grid">
+            <div class="card" onclick="openModule('Mark Attendance')"><i class="c-attendance">📝</i><span>Daily Mark</span></div>
+            <div class="card" onclick="openModule('Prev Record')"><i class="c-attendance">📂</i><span>Previous Record</span></div>
+            <div class="card" onclick="openModule('Daily Report')"><i class="c-report">📋</i><span>Daily Report</span></div>
+            <div class="card" onclick="openModule('Monthly Report')"><i class="c-report">📊</i><span>Monthly Record</span></div>
+        </div>
+
+        <div class="section-title">Staff & Management</div>
+        <div class="grid">
+            <div class="card" onclick="openModule('Teachers')"><i class="c-teacher">👨‍🏫</i><span>Teachers Data</span></div>
+            <div class="card" onclick="openModule('Teacher Attend')"><i class="c-teacher">🆔</i><span>Teacher Attend.</span></div>
+            <div class="card" onclick="openModule('Principles')"><i class="c-admin">👔</i><span>In-Charge/Princ.</span></div>
+            <div class="card" onclick="openModule('Clerk')"><i class="c-admin">⌨️</i><span>Senior/Jr Clerk</span></div>
+            <div class="card" onclick="openModule('Class Four')"><i class="c-admin">🧹</i><span>Class IV Staff</span></div>
+        </div>
+
+        <button class="btn-logout" onclick="location.reload()">Secure Logout</button>
+    </div>
+
+    <script>
+        function openModule(name) {
+            alert(name + " Module Opening...\n(Connecting to Firestore)");
+        }
+    </script>
+
+</body>
+</html>

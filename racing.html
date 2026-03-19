@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tehzeeb Bakers HR System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root{--primary:#c00000;--surface:#ffffff;--bg:#f4f7f6;--text:#2c3e50;--muted:#7f8c8d;--border:#e2e8f0;--success:#10b981;--danger:#ef4444;--warning:#f59e0b;--dark:#1e293b}
+        body{font-family:'Poppins',sans-serif;background:var(--bg);margin:0;padding:10px;color:var(--text)}
+        .container{max-width:600px;margin:0 auto}
+        .header{text-align:center;margin-bottom:20px;background:linear-gradient(135deg,var(--dark),#334155);padding:20px;border-radius:15px;color:#fff;box-shadow:0 10px 20px rgba(0,0,0,.1);border-bottom:5px solid var(--primary)}
+        .header h2{margin:0;font-size:26px;font-weight:700;letter-spacing:1px}
+        .header p{font-size:13px;margin-top:5px;color:#cbd5e1;font-weight:500;text-transform:uppercase}
+        .step-box{background:var(--surface);padding:22px;border-radius:15px;margin-bottom:20px;box-shadow:0 4px 15px rgba(0,0,0,.03);border:1px solid var(--border)}
+        .step-title{font-size:16px;font-weight:700;color:var(--dark);margin-top:0;margin-bottom:18px;border-bottom:2px solid #f1f5f9;padding-bottom:10px;text-transform:uppercase}
+        .input-group{margin-bottom:15px}
+        label{font-size:12px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px;text-transform:uppercase}
+        input,select{width:100%;padding:14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;box-sizing:border-box;outline:0;font-family:'Poppins',sans-serif;background:#f8fafc;transition:.3s}
+        input:focus,select:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 3px rgba(192,0,0,.1)}
+        .btn-add{width:100%;padding:14px;background:var(--primary);color:#fff;border:0;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;transition:.2s;text-transform:uppercase;letter-spacing:1px;margin-top:10px}
+        .btn-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}
+        .action-btn{padding:14px;border:0;border-radius:10px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;font-family:'Poppins',sans-serif;box-shadow:0 4px 6px rgba(0,0,0,.1)}
+        .btn-in{background:var(--success)} .btn-out{background:var(--danger)}
+        .btn-rest-start{background:#f97316} .btn-rest-end{background:#3b82f6}
+        .btn-leave{background:var(--warning);color:#000} .btn-resign{background:#475569}
+        .staff-list-area{max-height:200px;overflow-y:auto;background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:10px;margin-top:15px}
+        .staff-item{background:#fff;padding:12px 15px;margin-bottom:8px;border-radius:8px;border:1px solid #e2e8f0;display:flex;justify-content:space-between;align-items:center}
+        .del-btn{background:#fee2e2;color:var(--danger);border:0;padding:8px 14px;border-radius:6px;font-weight:600;font-size:11px;cursor:pointer}
+        .table-container{overflow-x:auto;margin-top:10px;border-radius:10px;border:1px solid var(--border)}
+        .data-table{width:100%;border-collapse:collapse;font-size:12px;text-align:left;background:#fff;white-space:nowrap}
+        .data-table thead{background:var(--dark);color:#fff}
+        .data-table th,.data-table td{padding:12px 15px;border-bottom:1px solid var(--border)}
+        .status-badge{padding:4px 8px;border-radius:6px;font-size:10px;font-weight:700;background:#e2e8f0;color:var(--dark)}
+        .export-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:15px}
+        .export-btn{padding:12px;border:0;border-radius:8px;font-size:12px;font-weight:600;color:#fff;cursor:pointer;font-family:'Poppins',sans-serif}
+        .pdf-btn{background:#e11d48} .xls-btn{background:#16a34a} .wa-btn{background:#25D366}
+        .clear-btn{width:100%;padding:14px;background:transparent;color:var(--danger);border:1.5px solid var(--danger);border-radius:10px;margin-top:20px;cursor:pointer;font-weight:600;font-family:'Poppins',sans-serif}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header"><h2>TEHZEEB HR PRO</h2><p>Smart Attendance System</p></div>
+        
+        <div class="step-box">
+            <h3 class="step-title">👤 1. Naya Staff Add Karein</h3>
+            <p style="font-size:11px;color:var(--muted);margin:-10px 0 10px;">💡 <strong>Tip:</strong> Ek sath zyada log add karne ke liye comma (,) lagayen (e.g. Ali, Usman)</p>
+            <div style="display:flex;gap:10px;flex-direction:column;">
+                <input type="text" id="new-name" placeholder="Name likhein (e.g. Ali, Usman, Bilal)">
+                <select id="new-dept">
+                    <option value="Burger Staff">🍔 Burger Staff</option>
+                    <option value="Sales Man">💼 Sales Man</option>
+                    <option value="Cleaning Staff">🧹 Cleaning Staff</option>
+                    <option value="Pizza Staff">🍕 Pizza Staff</option>
+                    <option value="Bakers">🍞 Bakers</option>
+                    <option value="Cake Staff">🎂 Cake Staff</option>
+                    <option value="Salad Staff">🥗 Salad Staff</option>
+                    <option value="Steam">🍗 Steam</option>
+                </select>
+            </div>
+            <button class="btn-add" onclick="addEmployee()">+ Add Employee(s)</button>
+            <div style="margin-top:25px;border-top:2px solid #f1f5f9;padding-top:15px;">
+                <h4 style="margin:0;font-size:14px;color:var(--dark);display:flex;justify-content:space-between;">🏢 Mojooda Staff List</h4>
+                <div class="staff-list-area" id="staff-list-display"></div>
+            </div>
+        </div>
+
+        <div class="step-box" style="border-top:4px solid var(--success);">
+            <h3 class="step-title" style="color:var(--success);">📝 2. Hazri Lagayen</h3>
+            <div class="input-group">
+                <label>Pehle Department Chunein:</label>
+                <select id="attn-dept" onchange="loadStaffForAttendance()">
+                    <option value="">-- Select Department --</option>
+                    <option value="Burger Staff">🍔 Burger Staff</option>
+                    <option value="Sales Man">💼 Sales Man</option>
+                    <option value="Cleaning Staff">🧹 Cleaning Staff</option>
+                    <option value="Pizza Staff">🍕 Pizza Staff</option>
+                    <option value="Bakers">🍞 Bakers</option>
+                    <option value="Cake Staff">🎂 Cake Staff</option>
+                    <option value="Salad Staff">🥗 Salad Staff</option>
+                    <option value="Steam">🍗 Steam</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Phir Employee Ka Naam Chunein:</label>
+                <select id="attn-name"><option value="">-- Pehle Upar Department Chunein --</option></select>
+            </div>
+            <div class="btn-grid">
+                <button class="action-btn btn-in" onclick="markAttendance('IN')">🟢 Check IN</button>
+                <button class="action-btn btn-out" onclick="markAttendance('OUT')">🔴 Check OUT</button>
+                <button class="action-btn btn-rest-start" onclick="markAttendance('REST_START')">☕ Go to Rest</button>
+                <button class="action-btn btn-rest-end" onclick="markAttendance('REST_END')">🔙 Back from Rest</button>
+                <button class="action-btn btn-leave" onclick="markAttendance('LEAVE')">🟡 On LEAVE</button>
+                <button class="action-btn btn-resign" onclick="markAttendance('RESIGNED')">⚫ RESIGNED</button>
+            </div>
+        </div>
+
+        <div class="step-box" style="border-top:4px solid var(--dark);padding-bottom:30px;">
+            <h3 class="step-title" style="display:flex;justify-content:space-between;align-items:center;">
+                <span>📊 3. Daily Attendance</span><span id="current-date" style="font-size:12px;color:var(--muted);"></span>
+            </h3>
+            <div id="print-area">
+                <div class="table-container">
+                    <table class="data-table" id="attendance-table">
+                        <thead><tr><th>Name</th><th>Dept</th><th>IN</th><th>OUT</th><th>Net Duty</th><th>Status</th></tr></thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="export-grid">
+                <button class="export-btn pdf-btn" onclick="downloadPDF()">📄 Get PDF</button>
+                <button class="export-btn xls-btn" onclick="downloadExcel()">📊 Get Excel</button>
+                <button class="export-btn wa-btn" onclick="sendWhatsApp()">📤 WhatsApp</button>
+            </div>
+            <button class="clear-btn" onclick="clearTodayData()">🗑️ Clear Today's Records</button>
+        </div>
+    </div>
+
+<script>
+    document.getElementById('current-date').innerText = new Date().toLocaleDateString();
+    let allStaff = JSON.parse(localStorage.getItem('tb_staff_v13')) || [];
+    let allLogs = JSON.parse(localStorage.getItem('tb_logs_v13')) || [];
+
+    window.onload = function(){ renderStaffList(); updateExcelTable(); };
+
+    function addEmployee() {
+        let nameText = document.getElementById('new-name').value.trim();
+        let dept = document.getElementById('new-dept').value;
+        if(!nameText) return alert("Pehle employee ka naam likhein!");
+        
+        let namesArray = nameText.split(',').map(n=>n.trim()).filter(n=>n!=="");
+        let added=0, dup=0;
+        
+        namesArray.forEach(name => {
+            if(!allStaff.find(s => s.name.toLowerCase()===name.toLowerCase() && s.dept===dept)){
+                allStaff.push({id: Date.now()+Math.random().toString(36).substr(2,5), name: name, dept: dept});
+                added++;
+            } else { dup++; }
+        });
+        
+        localStorage.setItem('tb_staff_v13', JSON.stringify(allStaff));
+        document.getElementById('new-name').value = "";
+        renderStaffList(); loadStaffForAttendance();
+        
+        if(added>0) alert(added + " naye log " + dept + " mein add ho gaye hain! 🎉");
+        if(dup>0) alert(dup + " log pehle se hi add the.");
+    }
+
+    function renderStaffList() {
+        let list = document.getElementById('staff-list-display'); list.innerHTML = "";
+        if(allStaff.length===0) return list.innerHTML = "<p style='text-align:center;font-size:12px;color:gray;'>Abhi tak koi staff add nahi hua.</p>";
+        allStaff.sort((a,b)=>a.dept.localeCompare(b.dept)).forEach(emp => {
+            list.innerHTML += `<div class="staff-item"><div><strong>${emp.name}</strong><br><small>${emp.dept}</small></div><button class="del-btn" onclick="removeEmployee('${emp.id}')">Delete</button></div>`;
+        });
+    }
+
+    function removeEmployee(id) {
+        if(confirm("Kya aap waqai is employee ko delete karna chahte hain?")) {
+            allStaff = allStaff.filter(s => s.id !== id);
+            localStorage.setItem('tb_staff_v13', JSON.stringify(allStaff));
+            renderStaffList(); loadStaffForAttendance();
+        }
+    }
+
+    function loadStaffForAttendance() {
+        let dept = document.getElementById('attn-dept').value;
+        let sel = document.getElementById('attn-name');
+        if(!dept) return sel.innerHTML = "<option value=''>-- Pehle Upar Department Chunein --</option>";
+        let avail = allStaff.filter(s => s.dept === dept);
+        sel.innerHTML = avail.length ? "<option value=''>-- Employee Select Karein --</option>" : "<option value=''>Is department mein koi staff nahi hai.</option>";
+        avail.forEach(emp => sel.innerHTML += `<option value="${emp.name}">${emp.name}</option>`);
+    }
+
+    function markAttendance(status) {
+        let dept = document.getElementById('attn-dept').value, name = document.getElementById('attn-name').value;
+        if(!dept || !name) return alert("Pehle Department aur Naam select karein!");
+        let now = new Date(), timeStr = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}), dateStr = now.toLocaleDateString(), timeMs = now.getTime();
+        let duration = "";
+        
+        if(status === 'OUT') {
+            let logs = allLogs.filter(l => l.name===name && l.date===dateStr).sort((a,b)=>a.timestamp-b.timestamp);
+            let totalMs = 0, lastIn = null;
+            logs.forEach(l => {
+                if(l.status==='IN' || l.status==='REST_END') lastIn = l.timestamp;
+                else if(l.status==='REST_START' && lastIn){ totalMs += (l.timestamp - lastIn); lastIn = null; }
+            });
+            if(lastIn) totalMs += (timeMs - lastIn);
+            if(totalMs > 0) duration = `${Math.floor(totalMs/3600000)}h ${Math.floor((totalMs%3600000)/60000)}m`;
+        }
+        
+        let dStatus = status;
+        if(status==='REST_START') dStatus='On Rest'; if(status==='REST_END'||status==='IN') dStatus='Working';
+        allLogs.push({name, dept, status, displayStatus: dStatus, time: timeStr, date: dateStr, timestamp: timeMs, duration});
+        localStorage.setItem('tb_logs_v13', JSON.stringify(allLogs));
+        
+        document.getElementById('attn-dept').value = ""; document.getElementById('attn-name').innerHTML = "<option value=''>-- Pehle Upar Department Chunein --</option>";
+        updateExcelTable();
+    }
+
+    function updateExcelTable() {
+        let tbody = document.getElementById('table-body'); tbody.innerHTML = "";
+        let dateStr = new Date().toLocaleDateString();
+        let tLogs = allLogs.filter(l => l.date === dateStr);
+        let names = [...new Set(tLogs.map(l => l.name))];
+        if(!names.length) return tbody.innerHTML = "<tr><td colspan='6' style='text-align:center;padding:20px;color:gray;'>Aaj ka koi record nahi hai.</td></tr>";
+        
+        names.forEach(name => {
+            let eLogs = tLogs.filter(l => l.name===name).sort((a,b)=>a.timestamp-b.timestamp);
+            let inR = eLogs.find(l=>l.status==='IN'), outR = eLogs.slice().reverse().find(l=>l.status==='OUT');
+            let cur = eLogs[eLogs.length-1].displayStatus, color = "#3b82f6";
+            if(cur==='Working') color="#10b981"; if(cur==='OUT'){ cur='Done'; color="#ef4444"; }
+            if(cur==='LEAVE') color="#f59e0b"; if(cur==='RESIGNED') color="#475569";
+            tbody.innerHTML += `<tr><td><strong>${name}</strong></td><td>${eLogs[0].dept}</td><td>${inR?inR.time:'--:--'}</td><td>${outR?outR.time:'--:--'}</td><td><strong>${outR?outR.duration:(inR?'...':'-')}</strong></td><td><span class="status-badge" style="background:${color}20;color:${color};">${cur}</span></td></tr>`;
+        });
+    }
+
+    // --- FIX 1: PDF WALA FUNCTION ---
+    function downloadPDF() {
+        if(document.getElementById('table-body').innerHTML.includes('koi record nahi')) {
+            alert("PDF banne ke liye koi data nahi hai!"); return;
+        }
+        let element = document.getElementById('print-area');
+        let opt = {
+          margin:       0.5,
+          filename:     `Tehzeeb_Attendance_${new Date().toLocaleDateString().replace(/\//g, '-')}.pdf`,
+          image:        { type: 'jpeg', quality: 0.98 },
+          html2canvas:  { scale: 2 },
+          jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        alert("⏳ PDF download ho rahi hai...");
+        html2pdf().set(opt).from(element).save();
+    }
+    
+    // --- FIX 2: EXCEL WALA FUNCTION ---
+    function downloadExcel() {
+        if(document.getElementById('table-body').innerHTML.includes('koi record nahi')) {
+            alert("Excel banne ke liye koi data nahi hai!"); return;
+        }
+        let table = document.getElementById("attendance-table");
+        let html = '<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>' + table.outerHTML + '</body></html>';
+        let blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = `Attendance_${new Date().toLocaleDateString().replace(/\//g, '-')}.xls`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+    
+    // --- FIX 3: WHATSAPP WALA FUNCTION ---
+    function sendWhatsApp() {
+        let tbody = document.getElementById('table-body');
+        let rows = tbody.getElementsByTagName('tr');
+        if (rows.length === 0 || tbody.innerText.includes('koi record nahi')) {
+            alert("Bhejne ke liye koi data nahi hai!"); return;
+        }
+        
+        let msg = "*🏢 Tehzeeb Bakers Attendance*\n";
+        msg += `Date: ${new Date().toLocaleDateString()}\n\n`;
+        
+        for (let i = 0; i < rows.length; i++) {
+            let cols = rows[i].getElementsByTagName('td');
+            if(cols.length >= 6) {
+                let name = cols[0].innerText;
+                let dept = cols[1].innerText;
+                let inTime = cols[2].innerText;
+                let outTime = cols[3].innerText;
+                let duty = cols[4].innerText;
+                let status = cols[5].innerText;
+                msg += `👤 *${name}* (${dept})\n🟢 IN: ${inTime} | 🔴 OUT: ${outTime}\n⏱ Duty: ${duty} | 📌 ${status}\n\n`;
+            }
+        }
+        
+        let encodedMsg = encodeURIComponent(msg);
+        window.open(`https://wa.me/?text=${encodedMsg}`, "_blank");
+    }
+    
+    function clearTodayData() {
+        if(confirm("Kiya aap waqai aaj ka saara record delete karna chahte hain?")) {
+            allLogs = allLogs.filter(l => l.date !== new Date().toLocaleDateString());
+            localStorage.setItem('tb_logs_v13', JSON.stringify(allLogs)); updateExcelTable();
+        }
+    }
+</script>
+</body>
+</html>
