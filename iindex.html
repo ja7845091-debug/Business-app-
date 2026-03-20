@@ -117,14 +117,14 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // فائر بیس کنفیگریشن
+        // Updated Firebase Config (matching your screenshot)
         const firebaseConfig = {
             apiKey: "AIzaSyCXehK7QevGzl_QcLJfVOghVEY4PpIwED4",
             authDomain: "studentform-ccfff.firebaseapp.com",
             projectId: "studentform-ccfff",
             storageBucket: "studentform-ccfff.firebasestorage.app",
             messagingSenderId: "176167055924",
-            appId: "1:176167055924:web:9a1515d793234b5e71d061"
+            appId: "1:176167055924:web:1321c6881cade91a71d061" 
         };
 
         const app = initializeApp(firebaseConfig);
@@ -161,7 +161,7 @@
                 form.classList.add('hidden'); 
                 postSubmitArea.classList.remove('hidden'); 
 
-                // 3. Set up WhatsApp Message Link (Directs student to send screenshot)
+                // 3. Set up WhatsApp Message Link
                 const myWhatsAppNumber = "923491053994";
                 const waMessage = `Assalam-o-Alaikum Sir!\n\nMaine AI Course ke liye application submit kar di hai.\n\n*Name:* ${studentName}\n*Phone:* ${phone}\n\nMain is message ke sath apni payment ka screenshot attach kar raha/rahi hoon. Kindly mera admission confirm kar dein.`;
                 const waUrl = `https://wa.me/${myWhatsAppNumber}?text=${encodeURIComponent(waMessage)}`;
